@@ -15,6 +15,9 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Account {
+
+    //Account part
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,4 +40,18 @@ public class Account {
         return accountRoles.stream()
                 .anyMatch(accountRole -> accountRole.getName().equals("ADMIN"));
     }
+
+
+    //User part
+
+    private String name;
+
+    private String surname;
+
+    private String email;
+
+    private String phone;
+
+
+
 }
