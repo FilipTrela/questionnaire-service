@@ -1,25 +1,33 @@
 package com.j25.pollsterservice.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+import org.apache.commons.lang3.RandomStringUtils;
 
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 public class QuestionnaireKey {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private String key;
+    @Column(nullable = false)
+    private String keyQuestionnaire;
 
-    private Integer counter;
+    @Column(nullable = false)
+    private Integer counterOfUse;
+
+    public QuestionnaireKey(Integer counter) {
+        this.keyQuestionnaire = RandomStringUtils.randomAlphanumeric(8);
+        this.counterOfUse = counter;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Questionnaire questionnaireKey;
 
 
 

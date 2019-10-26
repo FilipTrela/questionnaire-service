@@ -1,11 +1,11 @@
 package com.j25.pollsterservice.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
+
 
 @Data
 @Entity
@@ -27,10 +27,20 @@ public class Question {
     @Lob
     private Lob image;
 
-    private List<String> correctAnswers;
 
-    private List<String> incorrectAnswers;
+    private String correctAnswers;
 
-    private List<String> passibleAnswers;
+
+    private String incorrectAnswers;
+
+
+    private String passibleAnswers;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Questionnaire questionnaireQuestion;
+
+
+
 
 }

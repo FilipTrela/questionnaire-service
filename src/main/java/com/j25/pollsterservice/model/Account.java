@@ -1,8 +1,6 @@
 package com.j25.pollsterservice.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -43,14 +41,25 @@ public class Account {
 
 
     //User part
-
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String surname;
 
-    private String email;
+    @Column(nullable = false)
+    private String userEmail;
 
+    @Column(nullable = false)
     private String phone;
+
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+    @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
+    private Set<Questionnaire> questionnaireSet;
+
 
 
 

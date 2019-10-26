@@ -31,15 +31,19 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         addDefaultRole("USER");
         addDefaultRole("ADMIN");
 
-        addDefaultUser("admin", "admin", "ADMIN", "USER");
-        addDefaultUser("user", "user", "USER");
+        addDefaultUser("admin", "admin", "adminName", "adminSurname", "111 111 111" , "ADMIN", "USER");
+        addDefaultUser("user", "user", "userName", "userSurname", "222 222 222" ,"USER");
     }
 
-    private void addDefaultUser(String username, String password, String... roles) {
+    private void addDefaultUser(String username, String password, String name, String surname, String userEmail, String phone, String... roles) {
         if (!accountRepository.existsByUsername(username)) {
             Account account = new Account();
             account.setUsername(username);
             account.setPassword(passwordEncoder.encode(password));
+            account.setName(name);
+            account.setSurname(surname);
+            account.setUserEmail(userEmail);
+            account.setPhone(phone);
 
             Set<AccountRole> userRoles = findRoles(roles);
             account.setAccountRoles(userRoles);

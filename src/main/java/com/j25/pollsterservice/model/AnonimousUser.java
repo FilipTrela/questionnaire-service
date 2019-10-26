@@ -1,12 +1,12 @@
 package com.j25.pollsterservice.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @Entity
@@ -23,6 +23,14 @@ public class AnonimousUser {
     @CreationTimestamp
     private LocalDateTime answerDate;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Questionnaire questionnaireUser;
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "anonimousUser", fetch = FetchType.EAGER)
+    @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
+    private Set<Answer> answerSet;
 
 
 }
