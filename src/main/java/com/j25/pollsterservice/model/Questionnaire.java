@@ -49,6 +49,6 @@ public class Questionnaire {
     @ToString.Exclude
     @OneToMany(mappedBy = "questionnaireUser", fetch = FetchType.EAGER)
     @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
-    private Set<AnonimousUser> anonimousUserSet;
+    private Set<AnonymousUser> anonymousUserSet;
 
 }

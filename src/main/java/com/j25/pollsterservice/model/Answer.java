@@ -20,7 +20,7 @@ public class Answer {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private AnonimousUser anonimousUser;
+    private AnonymousUser anonymousUser;
 
 
     @ManyToOne(fetch = FetchType.LAZY)

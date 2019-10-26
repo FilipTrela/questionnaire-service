@@ -12,7 +12,7 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class AnonimousUser {
+public class AnonymousUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,7 +28,7 @@ public class AnonimousUser {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @OneToMany(mappedBy = "anonimousUser", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "anonymousUser", fetch = FetchType.EAGER)
     @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
     private Set<Answer> answerSet;
 

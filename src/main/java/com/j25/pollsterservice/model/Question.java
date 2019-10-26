@@ -34,12 +34,11 @@ public class Question {
     private String incorrectAnswers;
 
 
-    private String passibleAnswers;
+    private String possibleAnswers;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Questionnaire questionnaireQuestion;
-
 
 
 
