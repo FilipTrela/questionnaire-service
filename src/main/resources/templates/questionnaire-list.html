@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Questionnaire list</title>
+    <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
+</head>
+<body>
+<th:block th:replace="fragments :: navigator" th:remove="tag"/>
+
+<div class="container">
+    <h1>Questionnaire list</h1>
+    <div class="row col-md-12">
+        <div class="row col-md-12 list-header-row">
+            <div class="col-xs-4 col-sm-2 col-md-1">Id</div>
+            <div class="col-xs-8 col-sm-4 col-2">Questionnaire title</div>
+            <div class="col-xs-12 col-sm-6 col-3">Questionnaire description</div>
+            <div class="col-xs-6 col-sm-2 col-1">Questionnaire adding date</div>
+            <div class="col-xs-6 col-sm-2 col-1">Questionnaire ending date</div>
+            <div class="col-xs-12 col-sm-8 col-4"><!--Buttons--></div>
+        </div>
+        <div th:each="quest : ${questionnaires}" class="row col-md-12 list-data-row">
+            <div class="col-1" th:text="${quest.getId()}"></div>
+            <div class="col-2" th:text="${quest.getTitle()}"></div>
+            <div class="col-3" th:text="${quest.getDescription()}"></div>
+            <div class="col-1" th:text="${#temporals.format( quest.getAddingDate(),'yyyy-MM-dd HH:mm')}"></div>
+            <div class="col-1" th:text="${#temporals.format( quest.getEndingDate(),'yyyy-MM-dd HH:mm')}"></div>
+            <!--<div class="row col-4">-->
+                <!--<div class="col-4">-->
+                    <!--<a th:href="@{/questionnaire/remove/${quest.getId()}}">-->
+                        <!--<button th:disabled="${false}" type="button" class="btn btn-danger">Remove-->
+                        <!--</button>-->
+                    <!--</a>-->
+                <!--</div>-->
+                <!--<div class="col-4">-->
+                    <!--<a th:href="@{/questionnaire/show/${quest.getId()}}">-->
+                        <!--<button th:disabled="${false}" type="button" class="btn btn-primary">Show questions-->
+                        <!--</button>-->
+                    <!--</a>-->
+                <!--</div>-->
+            <!--</div>-->
+
+        </div>
+        <div>
+
+        </div>
+    </div>
+</div>
+<th:block th:replace="fragments :: footer" th:remove="tag"/>
+<th:block th:replace="fragments :: scripts" th:remove="tag"/>
+</body>
+</html>
