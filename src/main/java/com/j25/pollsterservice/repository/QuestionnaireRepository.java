@@ -11,7 +11,8 @@ import java.util.Optional;
 public interface QuestionnaireRepository extends JpaRepository<Questionnaire, Long> {
 
 
-    List<Questionnaire> findAllByAccountId(Long id);
+
+    List<Questionnaire> findAllByAccount(Account account);
 }
 
 

@@ -24,7 +24,7 @@ public class QuestionnarieService {
         Optional<Account> accountOptional = accountRepository.findByUsername(principal.getName());
         if(!accountOptional.isPresent()){
             Account account = accountOptional.get();
-            questionnaireList = questionnaireRepository.findAllByAccountId(account.getId());
+            questionnaireList = questionnaireRepository.findAllByAccount(account);
 
         }
 

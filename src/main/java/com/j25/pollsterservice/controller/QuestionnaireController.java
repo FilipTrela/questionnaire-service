@@ -16,7 +16,6 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-@NoArgsConstructor
 @RequestMapping("/questionnaire/")
 @PreAuthorize(value = "hasRole('USER')")
 public class QuestionnaireController {
