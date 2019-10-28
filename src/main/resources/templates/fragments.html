@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -17,53 +17,48 @@
     <nav class="site-header sticky-top py-1">
         <div class="container d-flex flex-column flex-md-row justify-content-between">
             <a class="py-2" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
-                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img"
-                     viewBox="0 0 24 24" focusable="false">
-                    <title>Security</title>
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/>
-                </svg>
+                <!--<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"-->
+                <!--stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img"-->
+                <!--viewBox="0 0 24 24" focusable="false">-->
+                <!--<title>Security</title>-->
+                <!---->
+                <!--<circle cx="12" cy="12" r="10"/>-->
+                <!--<path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/>-->
+                <!--</svg>-->
+                <img th:src="@{/image/logo2.png}" class="col-md-1">
             </a>
             <a class="py-2 d-none d-md-inline-block" th:href="@{/}">Home</a>
             <a class="py-2 d-none d-md-inline-block" sec:authorize="hasRole('ADMIN')" th:href="@{/tylkodlakozakow}">Kozaki</a>
             <a class="py-2 d-none d-md-inline-block" th:href="@{/admin/account/list}">Account list</a>
             <div class="py-2 d-none d-md-inline-block">
-                <a class="maj-2 d-none d-md-inline-block" sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
-                <a class="maj-2 d-none d-md-inline-block" sec:authorize="!isAuthenticated()" th:href="@{/user/register}">Register</a>
-                <a class="maj-2 d-none d-md-inline-block" sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
+                <a class="maj-2 d-none d-md-inline-block" sec:authorize="!isAuthenticated()"
+                   th:href="@{/login}">Login</a>
+                <a class="maj-2 d-none d-md-inline-block" sec:authorize="!isAuthenticated()"
+                   th:href="@{/user/register}">Register</a>
+                <a class="maj-2 d-none d-md-inline-block" sec:authorize="isAuthenticated()"
+                   th:href="@{/logout}">Logout</a>
             </div>
         </div>
     </nav>
 </th:block>
 
-<th:block th:fragment="footer">
-    <footer class="container py-5">
-        <div class="row">
-            <div class="col-12 col-md">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
-                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mb-2" role="img"
-                     viewBox="0 0 24 24" focusable="false"><title>Product</title>
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/>
-                </svg>
-                <small class="d-block mb-3 text-muted">&copy; 2017-2019</small>
-            </div>
-        </div>
+
+<th:block th:fragment="footer" >
+    <footer class="container footer" >
+        <p class="float-right"><a href="#">Back to top</a></p>
+        <p>&copy; 2019-2020 F.Trela & P.Stefanowski, Inc. &middot; <a href="#">Privacy</a> &middot; <a
+                href="#">Terms</a></p>
     </footer>
 </th:block>
 
 
 <th:block th:fragment="scripts">
+
     <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/popper.js/1.14.3/popper.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/mdb.min.js}"></script>
+    <script>new WOW().init();</script>
 </th:block>
-<footer th:fragment="footer" class="footer">
-    <footer class="container">
-        <p class="float-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2019-2020 F.Trela, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-    </footer>
-</footer>
 </body>
 </html>

@@ -20,10 +20,13 @@ public class IndexController {
         return "index";
     }
 
-    @GetMapping("/tylkodlakozakow")
-    public String kozaki() {
-        return "index";
+    @GetMapping("/test")
+    public String indexTest(Model model, Principal principal) {
+        model.addAttribute("user", principal.getName());
+        return "indexTest";
     }
+
+
 
     @GetMapping("/login")
     public String loginForm() {

@@ -33,4 +33,6 @@ public class AnonymousUser {
     private Set<Answer> answerSet;
 
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Account accountAnonymous;
 }

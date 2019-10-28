@@ -60,12 +60,11 @@ public class Account {
     @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
     private Set<Questionnaire> questionnaireSet;
 
-//    @EqualsAndHashCode.Exclude
-//    @ToString.Exclude
-//    @OneToMany( cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-//    @Cascade(value = org.hibernate.annotations.CascadeType.DELETE)
-//    @JoinColumn(name = "anonymous_user_id" , nullable = false)
-//    private Set<AnonymousUser> anonymousUserSet;
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "accountAnonymous", fetch = FetchType.EAGER)
+    @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
+    private Set<AnonymousUser> anonymousUserSet;
 
 
 }

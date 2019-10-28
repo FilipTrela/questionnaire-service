@@ -5,7 +5,7 @@
     <title>Index page</title>
     <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
 </head>
-<body>
+<body class="bg">
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
 <div class="container">
     <h1 th:if="${user == null}" >Hello! You should login</h1>
