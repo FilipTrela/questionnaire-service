@@ -53,6 +53,9 @@ public class Account {
     @Column(nullable = false)
     private String phone;
 
+    @Lob
+    private Lob avatar;
+
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

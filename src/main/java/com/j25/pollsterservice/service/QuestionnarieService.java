@@ -32,6 +32,8 @@ public class QuestionnarieService {
     }
 
 
+    public List<Questionnaire> findAllPublic() {
+        return questionnaireRepository.findAllByIsPrivateFalse();
 
-
+    }
 }
