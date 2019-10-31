@@ -28,18 +28,15 @@ public class Question {
     private Lob image;
 
 
-    private String correctAnswers;
-
-
-    private String incorrectAnswers;
-
-
-    private String possibleAnswers;
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
+    @Cascade(value = org.hibernate.annotations.CascadeType.DELETE)
+    private Set<PossibleAnswer> possibleAnswers;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Questionnaire questionnaireQuestion;
-
 
 
 }

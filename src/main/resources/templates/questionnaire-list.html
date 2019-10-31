@@ -26,16 +26,15 @@
             <div class="col-md-2" th:text="${#temporals.format( quest.getAddingDate(),'yyyy-MM-dd HH:mm')}"></div>
             <div class="col-md-2" th:text="${#temporals.format( quest.getEndingDate(),'yyyy-MM-dd HH:mm')}"></div>
             <div class="row col-md-2">
+                <!--<div class="col-md-6">-->
+                    <!--<a th:href="@{/questionnaire/remove/${quest.getId()}}" sec:authorize="hasRole('ADMIN')">-->
+                        <!--<button th:disabled="${false}" type="button" class="btn btn-danger">Remove-->
+                        <!--</button>-->
+                    <!--</a>-->
+                <!--</div>-->
                 <div class="col-md-6">
-                    <a th:href="@{/questionnaire/remove/${quest.getId()}}" sec:authorize="hasRole('ADMIN')">
-                        <button th:disabled="${false}" type="button" class="btn btn-danger">Remove
-                        </button>
-                    </a>
-                </div>
-                <div class="col-md-6">
-                    <a th:href="@{/questionnaire/show/${quest.getId()}}">
-                        <button th:disabled="${false}" type="button" class="btn btn-primary">Show questions
-                        </button>
+                    <a th:href="@{'/public/fill/'+${quest.getId()}}">
+                        <button th:disabled="${false}" type="button" class="btn btn-primary">Fill</button>
                     </a>
                 </div>
             </div>
