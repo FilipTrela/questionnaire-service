@@ -15,6 +15,9 @@ public class AnswerDataRequest {
     private Long questionnarieId;
     private Long anonymousUserId;
     private Integer counter;
+    private String choosenAnswer;
+    private String[] choosenAnswerList;
+
 
 
 

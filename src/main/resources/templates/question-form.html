@@ -20,28 +20,40 @@
                 </div>
 
                 <div th:each="answer : ${data.getQuestion().getPossibleAnswers()}" class="col-md-12">
-                    <input class="form-control" type="text" id="questionContent" th:text="${answer.getContent()}">
-
+                    <!--<input class="form-control" type="text" id="questionContent" th:text="${answer.getContent()}">-->
+                    <input type="radio"
+                           th:field="${data.choosenAnswer}"
+                           th:value="${answer.getContent()}" />
+                    <label
+                            th:for="${answer.getContent()}"
+                            th:text="${answer.getContent()}"></label>
                 </div>
+
+                <li th:each="answer : ${data.getQuestion().getPossibleAnswers()}">
+                    <input type="radio" th:field="${data.getAnswer().getId()}"
+                           th:value="${answer.getId()}" />
+                    <label th:for="${destinationAddress.destinationAddressId}"
+                           th:text="${destinationAddress}"></label>
+                </li>
+
+                <!--<li th:each="destinationAddress : ${destinationAddresses}">-->
+                    <!--<input type="radio" th:field="${address.destinationAddressId}"
+                    th:value="${destinationAddress.destinationAddressId}" />-->
+
+                    <!--<label th:for="${destinationAddress.destinationAddressId}"
+                    th:text="${destinationAddress}"></label>-->
+                <!--</li>-->
+
             </div>
 
-            <!--<div class="row col-md-12 form-input-row">-->
-                <!--<div class="col-md-6">-->
-                    <!--<label for="devicedescription">Device description:</label>-->
-                <!--</div>-->
-                <!--<div class="col-md-6">-->
-                    <!--<input class="form-control" type="text" id="devicedescription" th:field="*{deviceDescription}">-->
-                <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="row col-md-12 form-button-row">-->
-                <!--<div class="col-md-6">-->
-                    <!--<button type="reset" class="btn btn-warning offset-3 col-md-6">Reset</button>-->
-                <!--</div>-->
-                <!--<div class="col-md-6">-->
-                    <!--<button type="submit" class="btn btn-primary offset-3 col-md-6">Submit</button>-->
-                <!--</div>-->
-            <!--</div>-->
+            <div class="row col-md-12 form-button-row">
+                <div class="col-md-6">
+                    <button type="reset" class="btn btn-warning offset-3 col-md-6">Reset</button>
+                </div>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary offset-3 col-md-6">Submit</button>
+                </div>
+            </div>
         </div>
     </form>
 </div>
