@@ -28,23 +28,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/",
                         "/css/**",
+                        "/image/**",
                         "/js/**",
                         "/webjars/**",
                         "/user/register",
-                        "/login").permitAll()
+                        "/login",
+                        "/index").permitAll()
 //                reguły związane z rolami (np. /admin/**)
                 .anyRequest().authenticated()
                 .and()
-                    .formLogin()
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/", true)
-                        .permitAll()
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/", true)
+                .permitAll()
                 .and()
-                    .logout()
-                        .logoutUrl("/logout")
-                        .clearAuthentication(true)
-                        .invalidateHttpSession(true)
-                        .permitAll();
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .permitAll();
     }
 
     @Override

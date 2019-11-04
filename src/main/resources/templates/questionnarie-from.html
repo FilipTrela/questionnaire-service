@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration form</title>
+    <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
+</head>
+<body class="bg text-center">
+<th:block th:replace="fragments :: navigator" th:remove="tag"/>
+<center>
+    <div class="row col-md-5" style="margin-top: 100px">
+        <img th:src="@{/image/newQuestionnaire.png}" class="img-fluid rounded">
+    </div>
+</center>
+<form id="form" th:action="@{/questionnaire/create}" method="post" th:object="${questionarry}" style="margin-left: 15%">
+    <div class="form-row col-md-10">
+        <div class="form-group col-md-6">
+            <label for="exampleInputUsername"><p class="h6">Title</p></label>
+            <input type="text" class="form-control" id="exampleInputUsername"
+                   placeholder="Enter Title" maxlength="100" minlength="5" th:field="*{title}" aria-describedby="userHelp">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="exampleInputUsername"><p class="h6">Ending Date</p></label>
+            <input type="date" class="form-control" id="exampleDate"
+                   placeholder="Enter Ending Date" th:field="*{endingDate}" aria-describedby="userHelp">
+        </div>
+        <div class="form-group form-check col-md-3">
+            <input class="form-check-input" type="checkbox" th:default="true" th:field="*{isPrivate}" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+                <p class="h6">Is private</p>
+            </label>
+        </div>
+    </div>
+    <div class="form-group col-md-10">
+        <label for="exampleInputPassword1"><p class="h6">Description</p></label>
+        <textarea type="text" class="form-control" minlength="10" id="exampleInputPassword1" placeholder="Description"
+                  th:field="*{description}" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn sumbit" style="margin-right: 20%"></button>
+</form>
+<th:block th:replace="fragments :: footer" th:remove="tag"/>
+<th:block th:replace="fragments :: scripts" th:remove="tag"/>
+</body>
+</html>

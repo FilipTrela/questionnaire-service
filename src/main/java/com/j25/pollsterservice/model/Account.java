@@ -34,12 +34,6 @@ public class Account {
 
     private boolean locked;
 
-    public boolean isAdmin() {
-        return accountRoles.stream()
-                .anyMatch(accountRole -> accountRole.getName().equals("ADMIN"));
-    }
-
-
     //User part
     @Column(nullable = false)
     private String name;
@@ -66,5 +60,9 @@ public class Account {
     @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
     private Set<AnonymousUser> anonymousUserSet;
 
+    public boolean isAdmin() {
+        return accountRoles.stream()
+                .anyMatch(accountRole -> accountRole.getName().equals("ADMIN"));
+    }
 
 }

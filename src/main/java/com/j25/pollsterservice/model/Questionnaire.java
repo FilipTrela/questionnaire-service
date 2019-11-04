@@ -29,6 +29,7 @@ public class Questionnaire {
 
     private LocalDateTime endingDate;
 
+    private boolean isPrivate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Account account;

@@ -1,16 +1,62 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Index page</title>
     <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
 </head>
 <body class="bg">
-<th:block th:replace="fragments :: navigator" th:remove="tag"/>
-<div class="container">
-    <h1 th:if="${user == null}" >Hello! You should login</h1>
-    <h1 th:if="${user != null}">Hello <span th:text="${user}"></span></h1>
-</div>
+<main role="main" class="mainIndex">
+    <th:block th:replace="fragments :: navigator" th:remove="tag"/>
+    <center>
+        <img th:src="@{/image/name.png}" class="img-fluid rounded name" style="margin-top: 5%">
+        <div class="view overlay">
+            <div class="col-md-6 view overlay zoom animated fadeInDown">
+                <a>
+                    <img th:src="@{/image/open.png}" class="img-fluid rounded"
+                         alt="Responsive image">
+                </a>
+            </div>
+            <div class="row col-md-6" sec:authorize="!isAuthenticated()">
+                <div class="col-md-6 paddingless view overlay zoom animated fadeInDown delay-1s ">
+                    <a th:href="@{/user/register}">
+                        <img th:src="@{/image/registry.png}" class="img-fluid rounded"
+                             alt="Responsive image">
+                    </a>
+                </div>
+                <div class="col-md-6 paddingless view overlay zoom animated fadeInDown delay-1s ">
+                    <a th:href="@{/user/login}">
+                        <img th:src="@{/image/login.png}" class="img-fluid rounded"
+                             alt="Responsive image">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row col-md-6" sec:authorize="isAuthenticated()">
+            <div class="col-md-6 paddingless view overlay zoom animated fadeInDown delay-1s ">
+                <a th:href="@{/questionnaire/create}">
+                    <img th:src="@{/image/creatASurvey.png}" class="img-fluid rounded"
+                         alt="Responsive image">
+                </a>
+            </div>
+            <div class="col-md-6 paddingless view overlay zoom animated fadeInDown delay-1s ">
+                <a th:href="@{/user/login}">
+                    <img th:src="@{/image/mySurveys.png}" class="img-fluid rounded"
+                         alt="Responsive image">
+                </a>
+            </div>
+        </div>
+        </div>
+        <div class="view overlay">
+            <div class="animated hinge rounded delay-4s slower view zoom col-md-2 align-content-md-center">
+                <img th:src="@{/image/donate.png}" class="img-fluid"
+                     alt="Responsive image">
+            </div>
+        </div>
+    </center>
+</main>
+
+
 <th:block th:replace="fragments :: footer" th:remove="tag"/>
 <th:block th:replace="fragments :: scripts" th:remove="tag"/>
 </body>

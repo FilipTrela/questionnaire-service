@@ -15,15 +15,8 @@ import java.security.Principal;
 public class IndexController {
 
     @GetMapping("/")
-    public String index(Model model, Principal principal) {
-        model.addAttribute("user", principal.getName());
+    public String index() {
         return "index";
-    }
-
-    @GetMapping("/test")
-    public String indexTest(Model model, Principal principal) {
-        model.addAttribute("user", principal.getName());
-        return "indexTest";
     }
 
 

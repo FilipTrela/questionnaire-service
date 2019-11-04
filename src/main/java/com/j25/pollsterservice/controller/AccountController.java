@@ -1,6 +1,7 @@
 package com.j25.pollsterservice.controller;
 
 import com.j25.pollsterservice.model.Account;
+import com.j25.pollsterservice.model.dto.CreateNewAccountRequest;
 import com.j25.pollsterservice.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,35 +26,33 @@ public class AccountController {
     }
 
     @GetMapping("/register")
-    public String registrationForm(Model model, Account account) {
-        model.addAttribute("newAccount", account);
+    public String registrationForm(Model model, CreateNewAccountRequest request) {
+        model.addAttribute("newAccount", request);
 
         return "registration-form";
     }
 
     @PostMapping("/register")
-    public String register(@Valid Account account,
+    public String register(@Valid CreateNewAccountRequest request,
                            BindingResult result,
-                           String passwordConfirm,
                            Model model) {
 
         if(result.hasErrors()){
-            return registrationError(model, account, result.getFieldError().getDefaultMessage());
+            return registrationError(model, request, result.getFieldError().getDefaultMessage());
         }
 
-        // todo: tworzenie konta
-        if (!account.getPassword().equals(passwordConfirm)) {
-            return registrationError(model, account, "Passwords do not match.");
-        }
+//        if (!request.getPassword().equals(passwordConfirm)) {
+//            return registrationError(model, request, "Passwords do not match.");
+//        }
 
-        if(!accountService.register(account)){
-            return registrationError(model, account, "User with given username already exists.");
+        if(!accountService.register(request)){
+            return registrationError(model, request, "User with given username already exists.");
         }
 
         return "redirect:/login";
     }
 
-    private String registrationError(Model model, Account account, String message) {
+    private String registrationError(Model model, CreateNewAccountRequest account, String message) {
         model.addAttribute("newAccount", account);
         model.addAttribute("errorMessage", message);
 

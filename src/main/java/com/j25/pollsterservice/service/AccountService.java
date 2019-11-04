@@ -1,10 +1,12 @@
 package com.j25.pollsterservice.service;
 
+import com.j25.pollsterservice.mapper.AccountMapper;
 import com.j25.pollsterservice.model.Account;
 import com.j25.pollsterservice.model.AccountRole;
 import com.j25.pollsterservice.model.dto.AccountPasswordResetRequest;
-import com.j25.pollsterservice.repository.AccountRoleRepository;
+import com.j25.pollsterservice.model.dto.CreateNewAccountRequest;
 import com.j25.pollsterservice.repository.AccountRepository;
+import com.j25.pollsterservice.repository.AccountRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,16 +21,20 @@ public class AccountService {
     private PasswordEncoder passwordEncoder;
     private AccountRoleService accountRoleService;
     private AccountRoleRepository accountRoleRepository;
+    private AccountMapper accountMapper;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository, PasswordEncoder passwordEncoder, AccountRoleService accountRoleService, AccountRoleRepository accountRoleRepository) {
+    public AccountService(AccountRepository accountRepository, PasswordEncoder passwordEncoder, AccountRoleService accountRoleService, AccountRoleRepository accountRoleRepository, AccountMapper accountMapper) {
         this.accountRepository = accountRepository;
         this.passwordEncoder = passwordEncoder;
         this.accountRoleService = accountRoleService;
         this.accountRoleRepository = accountRoleRepository;
+        this.accountMapper = accountMapper;
     }
 
-    public boolean register(Account account) {
+
+    public boolean register(CreateNewAccountRequest request) {
+        Account account = accountMapper.createNewAccountFromDto(request);
         if (accountRepository.existsByUsername(account.getUsername())) {
             return false;
         }
