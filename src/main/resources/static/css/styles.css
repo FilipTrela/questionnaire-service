@@ -8,6 +8,7 @@
 }
 
 @media (min-width: 768px) {
+
     .bd-placeholder-img-lg {
         font-size: 3.5rem;
     }
@@ -27,10 +28,6 @@
     backdrop-filter: saturate(180%) blur(20px);
 }
 
-.site-header a {
-    color: #999;
-    transition: ease-in-out color .15s;
-}
 
 .site-header a:hover {
     color: #1fc9ce;
@@ -82,13 +79,39 @@
     flex: 1;
 }
 
-@media (min-width: 768px) {
+HEAD
+
+@media (min-width: 900px) {
+    >>> >>> > master
     .flex-md-equal > * {
         -ms-flex: 1;
         flex: 1;
     }
 }
 
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.form-container {
+    margin: 50px 0 100px 0;
+    padding: 0 12px 0 12px;
+    box-shadow: 1px 1px 5px 10px #CCCCCC;
+    align-items: center;
+}
+
+.form-input-row {
+    margin: 16px 0 16px 0;
+    padding: 0 5px 0 5px;
+}
+
+.form-button-row {
+    margin: 16px 0 16px 0;
+    padding: 0 5px 0 5px;
+}
+
+>>> >>> > master
 .overflow-hidden {
     overflow: hidden;
 }
@@ -117,15 +140,14 @@
 /*height: 40px;*/
 /*margin: 0 auto;*/
 /*}*/
-
 /*html,*/
 /*body,*/
 /*header,*/
 /*.view {*/
 /*height: 100%;*/
 /*}*/
-
-@media (max-width: 740px) {
+@media (max-width: 900px) {
+    >>> >>> > master
     html,
     body,
     header,
@@ -137,7 +159,6 @@
 /*body, html {*/
 /*height: 100%;*/
 /*}*/
-
 .bg {
     /* The image used */
     background-image: url('../image/back2.png');
@@ -206,25 +227,30 @@
     background-color: #1fc9ce;
     color: #966364;
 }
+
 .dropListElement {
     background-color: #966364;
     color: #1fc9ce;
-    padding: 1px; !important;
+    padding: 1px;
+!important;
 }
 
-.dropListElement p{
+.dropListElement p {
     color: #1fc9ce;
     padding: 5px;
 }
 
 .dropListElement a {
 }
-.dropListElement p:hover{
+
+.dropListElement p:hover {
     color: #966364;
 }
-.dropText{
+
+.dropText {
     color: inherit;
 }
+
 .login {
     background-image: url('../image/loginBTN.png');
     background-size: 100%;

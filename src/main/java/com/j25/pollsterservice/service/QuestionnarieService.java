@@ -29,12 +29,9 @@ public class QuestionnarieService {
         if (!accountOptional.isPresent()) {
             Account account = accountOptional.get();
             questionnaireList = questionnaireRepository.findAllByAccount(account);
-
         }
-
         return questionnaireList;
     }
-
 
     public Long add(CreateQuestionnaireRequest request, Principal principal) {
         Optional<Account> optionalAccount = accountRepository.findByUsername(principal.getName());
@@ -44,5 +41,33 @@ public class QuestionnarieService {
             questionnaireRepository.save(newQuestionnaireFormDto);
         }
         throw new EntityNotFoundException("no user");
+    }
+
+    public List<Questionnaire> findAllPublic() {
+        return questionnaireRepository.findAllByIsPrivateFalse();
+    }
+
+    public void delete(Long questionnaireId, String name) {
+        Optional<Account> accountOptional = accountRepository.findByUsername(name);
+        if (!accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            if (questionnaireRepository.findById(questionnaireId).get().getAccount().equals(account)) {
+                questionnaireRepository.deleteById(questionnaireId);
+            }
+
+        }
+    }
+//
+//    public Questionnaire findById(Long quedtionnaireId) {
+//        Optional<Questionnaire> questionnaireOptional =  questionnaireRepository.findById(quedtionnaireId);
+//        if(questionnaireOptional.isPresent()){
+//            return questionnaireOptional.get();
+//        }
+//        throw new EntityNotFoundException("no such entity");
+//    }
+
+    public Optional<Questionnaire> findById(Long questionnaireId) {
+
+        return questionnaireRepository.findById(questionnaireId);
     }
 }

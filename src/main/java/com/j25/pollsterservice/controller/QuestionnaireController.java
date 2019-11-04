@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -45,6 +46,13 @@ public class QuestionnaireController {
         Long id = questionnarieService.add(request, principal);
 
         return "redirect:/question/list/" + id;
+    }
+
+    @GetMapping("/remove/{remove_quest_id}")
+    public String delete(Model model,
+                         @PathVariable(name = "remove_quest_id") Long questionnaireId, Principal principal) {
+        questionnarieService.delete(questionnaireId, principal.getName());
+        return "redirect:/questionnaire/list";
     }
 
 
