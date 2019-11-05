@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AnswerDataRequest {
-    private Question question;
-    private Answer answer;
+    private Long questionId;
+    private Long answerId;
     private Long questionnarieId;
     private Long anonymousUserId;
     private Integer counter;
-    private String choosenAnswer;
-    private String[] choosenAnswerList;
+
+    private Long[] questionnaireQuestionIdTab;
 
 
 

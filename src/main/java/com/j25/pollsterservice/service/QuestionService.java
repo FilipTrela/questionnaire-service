@@ -7,6 +7,7 @@ import com.j25.pollsterservice.repository.QuestionnaireRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -37,5 +38,14 @@ public class QuestionService {
     public Optional<Question> findNextQuestion(Questionnaire questionnaire, Long last_question_id) {
 
         return questionRepository.findQuestionByQuestionnaireQuestionAndIdAfter(questionnaire, last_question_id);
+    }
+
+    public Long[] findByQuestionnarieQuestionId(Long questionnaireId) {
+        List<Question> questionList = questionRepository.findQuestionByQuestionnaireQuestionId(questionnaireId);
+        Long[] questionIdTab = new Long[questionList.size()];
+        for (int i = 0; i < questionList.size(); i++) {
+            questionIdTab[i]=questionList.get(i).getId();
+        }
+        return questionIdTab;
     }
 }
