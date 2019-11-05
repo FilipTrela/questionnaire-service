@@ -1,10 +1,10 @@
 package com.j25.pollsterservice.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -26,5 +26,11 @@ public class PossibleAnswer {
     @ManyToOne(fetch = FetchType.LAZY)
     private Question question ;
 
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "answer", fetch = FetchType.EAGER)
+    @Cascade(value = org.hibernate.annotations.CascadeType.DELETE)
+    private Set<Answer> chosenAnswers;
 
 }

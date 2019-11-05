@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 public class QuestionController {
 
     private QuestionService questionService;
-//
+
 //    @GetMapping("/list")
 //    public String listQuestions(Model model, Principal principal) {
 //        List<Question> questionnaires = questionService.findAllUserQuestion(principal);

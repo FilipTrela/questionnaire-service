@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -41,10 +42,18 @@ public class QuestionService {
         return questionRepository.findQuestionByQuestionnaireQuestionAndIdAfter(questionnaire, last_question_id);
     }
 
+
     public Page<Question> getPage(Long id, PageRequest of) {
 //        Set<Question> questionSet = questionnaireRepository.getOne(id).getQuestionSet();
       return questionRepository.findAllByQuestionnaireQuestionId(id, of);
+    }
 
-
+    public Long[] findByQuestionnarieQuestionId(Long questionnaireId) {
+        List<Question> questionList = questionRepository.findQuestionByQuestionnaireQuestionId(questionnaireId);
+        Long[] questionIdTab = new Long[questionList.size()];
+        for (int i = 0; i < questionList.size(); i++) {
+            questionIdTab[i]=questionList.get(i).getId();
+        }
+        return questionIdTab;
     }
 }

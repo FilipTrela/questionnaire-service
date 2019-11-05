@@ -16,7 +16,8 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String content;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private PossibleAnswer answer ;
 
 
     @ManyToOne(fetch = FetchType.LAZY)

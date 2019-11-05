@@ -12,7 +12,7 @@
         <img th:src="@{/image/name.png}" class="img-fluid rounded name" th:style="${jesteAdmine ? 'margin-top: 2%' : 'margin-top: 4%'}">
         <div class="view overlay">
             <div class="col-md-6 view overlay zoom animated fadeInDown">
-                <a>
+                <a th:href="@{/public/listQuestionnaire}">
                     <img th:src="@{/image/open.png}" class="img-fluid rounded"
                          alt="Responsive image">
                 </a>
@@ -40,7 +40,7 @@
                 </a>
             </div>
             <div class="col-md-6 paddingless view overlay zoom animated fadeInDown delay-1s ">
-                <a th:href="@{/user/login}">
+                <a th:href="@{/questionnaire/list}">
                     <img th:src="@{/image/mySurveys.png}" class="img-fluid rounded"
                          alt="Responsive image">
                 </a>

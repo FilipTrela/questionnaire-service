@@ -1,14 +1,8 @@
 package com.j25.pollsterservice.controller;
 
-import com.j25.pollsterservice.model.AnonymousUser;
-import com.j25.pollsterservice.model.Answer;
-import com.j25.pollsterservice.model.Question;
-import com.j25.pollsterservice.model.Questionnaire;
+import com.j25.pollsterservice.model.*;
 import com.j25.pollsterservice.model.dto.AnswerDataRequest;
-import com.j25.pollsterservice.service.AnonymousUserService;
-import com.j25.pollsterservice.service.AnswerService;
-import com.j25.pollsterservice.service.QuestionService;
-import com.j25.pollsterservice.service.QuestionnarieService;
+import com.j25.pollsterservice.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -28,6 +22,7 @@ public class PublicQuestionnaireController {
     private QuestionService questionService;
     private AnonymousUserService anonymousUserService;
     private AnswerService answerService;
+    private PossibleAnswerService possibleAnswerService;
 
 
     @GetMapping("/listQuestionnaire")
@@ -64,91 +59,83 @@ public class PublicQuestionnaireController {
             anonymousUser = anonymousUserService.save(anonymousUser);
         }
 
-        return "redirect:/public/answer/" + questionnaireCheck.getId() + "/" + anonymousUser.getId();
+        return "redirect:/public/answer/" + questionnaireCheck.getId() + "/" + anonymousUser.getId() + "/1";
     }
 
 
-    @GetMapping("/answer/{questionnaire_id}/{anonymous_user_id}")
-    public String firstAnswer(Model model,
-                              Question question,
-                              Answer answer,
-                              @PathVariable(name = "questionnaire_id") Long questionnaireId,
-                              @PathVariable(name = "anonymous_user_id") Long anonymousUserId) {
-        Optional<Questionnaire> questionnaireOptional = questionnarieService.findById(questionnaireId);
-        Optional<AnonymousUser> anonymousUserOptional = anonymousUserService.findById(anonymousUserId);
 
-        if (questionnaireOptional.isPresent() & anonymousUserOptional.isPresent()) {
-            Questionnaire questionnaire = questionnaireOptional.get();
-            Optional<Question> questionOptional = questionService.findFiresByQuestionnarieQuestId(questionnaire.getId());
-            if(questionOptional.isPresent()){
-                question=questionOptional.get();
-                AnswerDataRequest answerDataRequest = new AnswerDataRequest();
-                answerDataRequest.setAnonymousUserId(anonymousUserId);
-                answerDataRequest.setQuestionnarieId(questionnaireId);
-                answerDataRequest.setQuestion(question);
-                answerDataRequest.setAnswer(answer);
-                answerDataRequest.setCounter(1);
-                model.addAttribute("data", answerDataRequest);
-                return "question-form";
-            }
-
-        }
-        return "redirect:/public/listQuestionnaire";
-
-    }
 
     @PostMapping("/answer")
-    public String firstAnswer(@ModelAttribute("data") AnswerDataRequest data, Model model ) {
-        Optional<Questionnaire> questionnaireOptional = questionnarieService.findById(data.getQuestionnarieId());
-        Optional<AnonymousUser> anonymousUserOptional = anonymousUserService.findById(data.getAnonymousUserId());
+    public String firstAnswer(@ModelAttribute AnswerDataRequest answerDataRequest) {
 
-        if (questionnaireOptional.isPresent() & anonymousUserOptional.isPresent()) {
-            Answer answer = data.getAnswer();
+
+        Optional<Question> questionOptional = questionService.findById(answerDataRequest.getQuestionnaireQuestionIdTab()[answerDataRequest.getCounter() - 2]);
+        Optional<AnonymousUser> anonymousUserOptional = anonymousUserService.findById(answerDataRequest.getAnonymousUserId());
+        Optional<PossibleAnswer> possibleAnswerOptional = possibleAnswerService.findById(answerDataRequest.getAnswerId());
+
+
+        if (questionOptional.isPresent() & anonymousUserOptional.isPresent() & possibleAnswerOptional.isPresent()) {
+            Answer answer = new Answer();
+            Question question = questionOptional.get();
+
             answer.setAnonymousUser(anonymousUserOptional.get());
-            answer.setContent(data.getChoosenAnswer());
-            answer.setQuestion(data.getQuestion());
+            answer.setAnswer(possibleAnswerOptional.get());
+            answer.setQuestion(question);
 
             answerService.save(answer);
-
-        }
-
-        return "redirect:/public/listQuestionnaire";
-    }
-
-    @GetMapping("/answer/{questionnaire_id}/{anonymous_user_id}/{last_question_id}")
-    public String answer(Model model,
-                              Question question,
-                              Answer answer,
-                              @PathVariable(name = "questionnaire_id") Long questionnaireId,
-                              @PathVariable(name = "anonymous_user_id") Long anonymousUserId,
-                              @PathVariable(name = "last_question_id") Long last_question_id) {
-        Optional<Questionnaire> questionnaireOptional = questionnarieService.findById(questionnaireId);
-        Optional<AnonymousUser> anonymousUserOptional = anonymousUserService.findById(anonymousUserId);
-        Optional<Question> questionOptional = questionService.findById(last_question_id);
-
-        if (questionnaireOptional.isPresent() & anonymousUserOptional.isPresent() & questionOptional.isPresent()) {
-            Questionnaire questionnaire = questionnaireOptional.get();
-            Optional<Question> nextQuestionOptional = questionService.findNextQuestion(questionnaire, last_question_id);
-            if(nextQuestionOptional.isPresent()){
-                question=nextQuestionOptional.get();
-                AnswerDataRequest answerDataRequest = new AnswerDataRequest();
-                answerDataRequest.setAnonymousUserId(anonymousUserId);
-                answerDataRequest.setQuestionnarieId(questionnaireId);
-                answerDataRequest.setQuestion(question);
-                answerDataRequest.setAnswer(answer);
-                answerDataRequest.setCounter(1);
-                model.addAttribute("data", answerDataRequest);
-                return "question-form";
+            if (answerDataRequest.getQuestionnaireQuestionIdTab().length < answerDataRequest.getCounter()) {
+                return "redirect:/public/endOfQuestionnaire";
+                //return "redirect:/public/listQuestionnaire";
             }
 
+            return "redirect:/public/answer/" +
+                    answerDataRequest.getQuestionnarieId() +
+                    "/" + answerDataRequest.getAnonymousUserId() +
+                    "/" + answerDataRequest.getCounter();
+        }
+
+        return "redirect:/public/listQuestionnaire";
+
+    }
+
+    @GetMapping("/answer/{questionnaire_id}/{anonymous_user_id}/{counter}")
+    public String answer(Model model,
+                         Question question,
+                         Answer answer,
+                         @PathVariable(name = "questionnaire_id") Long questionnaireId,
+                         @PathVariable(name = "anonymous_user_id") Long anonymousUserId,
+                         @PathVariable(name = "counter") Integer last_counter) {
+
+        AnswerDataRequest answerDataRequest = new AnswerDataRequest();
+        answerDataRequest.setQuestionnaireQuestionIdTab(questionService.findByQuestionnarieQuestionId(questionnaireId));
+
+        Optional<Questionnaire> questionnaireOptional = questionnarieService.findById(questionnaireId);
+        Optional<AnonymousUser> anonymousUserOptional = anonymousUserService.findById(anonymousUserId);
+        Optional<Question> questionOptional = questionService.findById(answerDataRequest.getQuestionnaireQuestionIdTab()[last_counter - 1]);
+
+        if (questionnaireOptional.isPresent() & anonymousUserOptional.isPresent() & questionOptional.isPresent()) {
+
+            question = questionOptional.get();
+
+            answerDataRequest.setAnonymousUserId(anonymousUserId);
+            answerDataRequest.setQuestionnarieId(questionnaireId);
+            answerDataRequest.setQuestionId(question.getId());
+            answerDataRequest.setAnswerId(answer.getId());
+
+            answerDataRequest.setCounter(last_counter + 1);
+            model.addAttribute("question", question);
+            model.addAttribute("data", answerDataRequest);
+            return "question-form";
+
+
         }
         return "redirect:/public/listQuestionnaire";
 
     }
 
 
-
-
+    @GetMapping("/endOfQuestionnaire")
+    public String endOfQuestionnaire() { return "end-view"; }
 
 
     /*

@@ -8,41 +8,40 @@
 <body>
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
 <div class="container">
-    <h1>Question <span th:text="${data.getCounter()}"></span></h1>
+    <h1>Question <span th:text="${data.getCounter()-1}"></span>/<span
+            th:text="${data.getQuestionnaireQuestionIdTab().length}"></span></h1>
+    <!--<form th:action="@{'/public/answer/'+${data.getQuestionnarieId()}+'/'+${data.getAnonymousUserId()}}" method="post" th:object="${data}">-->
     <form th:action="@{/public/answer}" method="post" th:object="${data}">
+
         <div class="row col-12 form-container">
             <input type="hidden" th:field="*{questionnarieId}" th:value="*{questionnarieId}">
             <input type="hidden" th:field="*{anonymousUserId}" th:value="*{anonymousUserId}">
+            <!--<input type="hidden" th:field="*{questionId}" th:value="*{questionId}">-->
+            <input type="hidden" th:field="*{counter}" th:value="*{counter}">
+            <input type="hidden" th:field="*{questionnaireQuestionIdTab}" th:value="*{questionnaireQuestionIdTab}">
 
             <div class="row col-md-12 form-input-row">
                 <div>
-                    <div class="col-md-12" th:text="${data.getQuestion().getContent()}"></div>
+                    <div class="col-md-12" th:text="${question.getContent()}"></div>
                 </div>
 
-                <div th:each="answer : ${data.getQuestion().getPossibleAnswers()}" class="col-md-12">
+                <div th:each="answer : ${question.getPossibleAnswers()}" class="col-md-12">
                     <!--<input class="form-control" type="text" id="questionContent" th:text="${answer.getContent()}">-->
                     <input type="radio"
-                           th:field="${data.choosenAnswer}"
-                           th:value="${answer.getContent()}" />
+                           th:field="*{answerId}"
+                           th:value="${answer.getId()}"/>
                     <label
-                            th:for="${answer.getContent()}"
+                            th:for="${answer.getId()}"
                             th:text="${answer.getContent()}"></label>
                 </div>
 
-                <li th:each="answer : ${data.getQuestion().getPossibleAnswers()}">
-                    <input type="radio" th:field="${data.getAnswer().getId()}"
-                           th:value="${answer.getId()}" />
-                    <label th:for="${destinationAddress.destinationAddressId}"
-                           th:text="${destinationAddress}"></label>
-                </li>
+                <!--<div th:each="answer : ${data.getQuestion().getPossibleAnswers()}">-->
+                <!--<input type="radio" th:field="${data.getAnswer().getId()}"-->
+                <!--th:value="${answer.getId()}" />-->
+                <!--<label th:for="${answer.getId()}"-->
+                <!--th:text="${answer.getContent()}"></label>-->
+                <!--</div>-->
 
-                <!--<li th:each="destinationAddress : ${destinationAddresses}">-->
-                    <!--<input type="radio" th:field="${address.destinationAddressId}"
-                    th:value="${destinationAddress.destinationAddressId}" />-->
-
-                    <!--<label th:for="${destinationAddress.destinationAddressId}"
-                    th:text="${destinationAddress}"></label>-->
-                <!--</li>-->
 
             </div>
 
@@ -50,8 +49,11 @@
                 <div class="col-md-6">
                     <button type="reset" class="btn btn-warning offset-3 col-md-6">Reset</button>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" th:if="${data.getQuestionnaireQuestionIdTab().length}>${data.getCounter()-1}">
                     <button type="submit" class="btn btn-primary offset-3 col-md-6">Submit</button>
+                </div>
+                <div class="col-md-6" th:if="${data.getQuestionnaireQuestionIdTab().length}==${data.getCounter()-1}">
+                    <button type="submit" class="btn btn-primary offset-3 col-md-6">Submit and end</button>
                 </div>
             </div>
         </div>
