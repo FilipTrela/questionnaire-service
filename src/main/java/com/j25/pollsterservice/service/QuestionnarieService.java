@@ -26,11 +26,12 @@ public class QuestionnarieService {
     public List<Questionnaire> findAllUserQuestionnaire(Principal principal) {
         List<Questionnaire> questionnaireList = new LinkedList<>();
         Optional<Account> accountOptional = accountRepository.findByUsername(principal.getName());
-        if (!accountOptional.isPresent()) {
+        if (accountOptional.isPresent()) {
             Account account = accountOptional.get();
             questionnaireList = questionnaireRepository.findAllByAccount(account);
+            return questionnaireList;
         }
-        return questionnaireList;
+        throw new EntityNotFoundException("no questionnaires");
     }
 
     public Long add(CreateQuestionnaireRequest request, Principal principal) {
@@ -49,25 +50,18 @@ public class QuestionnarieService {
 
     public void delete(Long questionnaireId, String name) {
         Optional<Account> accountOptional = accountRepository.findByUsername(name);
-        if (!accountOptional.isPresent()) {
+        Optional<Questionnaire> questionnaireOptional = questionnaireRepository.findById(questionnaireId);
+        if (accountOptional.isPresent() & questionnaireOptional.isPresent()) {
             Account account = accountOptional.get();
-            if (questionnaireRepository.findById(questionnaireId).get().getAccount().equals(account)) {
+            Questionnaire questionnaire = questionnaireOptional.get();
+            if (account.equals(questionnaire.getAccount())) {
                 questionnaireRepository.deleteById(questionnaireId);
             }
-
         }
     }
-//
-//    public Questionnaire findById(Long quedtionnaireId) {
-//        Optional<Questionnaire> questionnaireOptional =  questionnaireRepository.findById(quedtionnaireId);
-//        if(questionnaireOptional.isPresent()){
-//            return questionnaireOptional.get();
-//        }
-//        throw new EntityNotFoundException("no such entity");
-//    }
+
 
     public Optional<Questionnaire> findById(Long questionnaireId) {
-
         return questionnaireRepository.findById(questionnaireId);
     }
 }

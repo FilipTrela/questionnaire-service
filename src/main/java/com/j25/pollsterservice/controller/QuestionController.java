@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class QuestionController {
 
     private QuestionService questionService;
-//
+
 //    @GetMapping("/list")
 //    public String listQuestions(Model model, Principal principal) {
 //        List<Question> questionnaires = questionService.findAllUserQuestion(principal);
@@ -26,11 +26,10 @@ public class QuestionController {
 //
 //    }
 
+
     @GetMapping("/list/{id}")
     public String listQuestionFromQuestionnary(Model model, @PathVariable(name = "id") Long id) {
         model.addAttribute("questions", questionService.getQuestion(id));
-
         return "question-list";
     }
-
 }
