@@ -63,38 +63,7 @@ public class PublicQuestionnaireController {
     }
 
 
-//    @GetMapping("/answer/{questionnaire_id}/{anonymous_user_id}")
-//    public String firstAnswer(Model model,
-//                              Question question,
-//                              Answer answer,
-//                              @PathVariable(name = "questionnaire_id") Long questionnaireId,
-//                              @PathVariable(name = "anonymous_user_id") Long anonymousUserId) {
-//        Optional<Questionnaire> questionnaireOptional = questionnarieService.findById(questionnaireId);
-//        Optional<AnonymousUser> anonymousUserOptional = anonymousUserService.findById(anonymousUserId);
-//        AnswerDataRequest answerDataRequest = new AnswerDataRequest();
-//        answerDataRequest.setQuestionnaireQuestionIdTab(questionService.findByQuestionnarieQuestionId(questionnaireId));
-//
-//        if (questionnaireOptional.isPresent() & anonymousUserOptional.isPresent()) {
-//            Optional<Question> questionOptional = questionService.findById(answerDataRequest.getQuestionnaireQuestionIdTab()[0]);
-//
-//            if(questionOptional.isPresent()){
-//                question=questionOptional.get();
-//
-//                answerDataRequest.setAnonymousUserId(anonymousUserId);
-//                answerDataRequest.setQuestionnarieId(questionnaireId);
-//                answerDataRequest.setQuestionId(question.getId());
-//                answerDataRequest.setAnswerId(answer.getId());
-//                answerDataRequest.setCounter(1);
-//
-//                model.addAttribute("question", question);
-//                model.addAttribute("data", answerDataRequest);
-//                return "question-form";
-//            }
-//
-//        }
-//        return "redirect:/public/listQuestionnaire";
-//
-//    }
+
 
     @PostMapping("/answer")
     public String firstAnswer(@ModelAttribute AnswerDataRequest answerDataRequest) {
