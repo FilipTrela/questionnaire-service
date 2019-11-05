@@ -111,4 +111,13 @@ public class AccountService {
             accountRepository.save(account);
         }
     }
+
+    public boolean isAdmin(String name) {
+        Optional<Account> accountOptional = accountRepository.findByUsername(name);
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            return account.getAccountRoles().stream().anyMatch(accountRole -> accountRole.getName().equals("ADMIN"));
+        }
+        return false;
+    }
 }

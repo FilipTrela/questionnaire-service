@@ -9,7 +9,7 @@
 <main role="main" class="mainIndex">
     <th:block th:replace="fragments :: navigator" th:remove="tag"/>
     <center>
-        <img th:src="@{/image/name.png}" class="img-fluid rounded name" style="margin-top: 5%">
+        <img th:src="@{/image/name.png}" class="img-fluid rounded name" th:style="${jesteAdmine ? 'margin-top: 2%' : 'margin-top: 4%'}">
         <div class="view overlay">
             <div class="col-md-6 view overlay zoom animated fadeInDown">
                 <a th:href="@{/public/listQuestionnaire}">
@@ -46,8 +46,22 @@
                 </a>
             </div>
         </div>
+        <div class="row col-md-6" sec:authorize="hasRole('ADMIN')">
+            <div class="col-md-6 paddingless view overlay zoom animated fadeInDown delay-1s ">
+                <a th:href="@{/admin/account/list}">
+                    <img th:src="@{/image/usersList.png}" class="img-fluid rounded"
+                         alt="Responsive image">
+                </a>
+            </div>
+            <div class="col-md-6 paddingless view overlay zoom animated fadeInDown delay-1s ">
+                <a th:href="@{/admin/account/shutDown}">
+                    <img th:src="@{/image/shutDown.png}" class="img-fluid rounded"
+                         alt="Responsive image">
+                </a>
+            </div>
         </div>
-        <div class="view overlay">
+        </div>
+        <div class="view overlay" sec:authorize="!hasRole('ADMIN')">
             <div class="animated hinge rounded delay-4s slower view zoom col-md-2 align-content-md-center">
                 <img th:src="@{/image/donate.png}" class="img-fluid"
                      alt="Responsive image">

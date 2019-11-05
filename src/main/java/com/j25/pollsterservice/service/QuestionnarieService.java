@@ -39,7 +39,7 @@ public class QuestionnarieService {
         if (optionalAccount.isPresent()) {
             Questionnaire newQuestionnaireFormDto = questionnaireMapper.createNewQuestionnaireFormDto(request);
             newQuestionnaireFormDto.setAccount(optionalAccount.get());
-            questionnaireRepository.save(newQuestionnaireFormDto);
+            return questionnaireRepository.save(newQuestionnaireFormDto).getId();
         }
         throw new EntityNotFoundException("no user");
     }

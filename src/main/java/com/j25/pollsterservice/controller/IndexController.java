@@ -1,5 +1,7 @@
 package com.j25.pollsterservice.controller;
 
+import com.j25.pollsterservice.model.Account;
+import com.j25.pollsterservice.service.AccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +16,15 @@ import java.security.Principal;
 @AllArgsConstructor
 public class IndexController {
 
+    private AccountService accountService;
+
     @GetMapping("/")
-    public String index() {
+    public String index(Model model,Principal principal) {
+        if(principal != null) {
+            model.addAttribute("jesteAdmine", accountService.isAdmin(principal.getName()));
+        }else{
+            model.addAttribute("jesteAdmine", false);
+        }
         return "index";
     }
 

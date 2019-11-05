@@ -86,4 +86,9 @@ public class AdminAccountController {
 
         return "redirect:/admin/account/list";
     }
+
+    @GetMapping("/shutDown")
+    public String shutDown() {
+        return "system-down";
+    }
 }

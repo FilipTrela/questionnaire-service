@@ -5,6 +5,8 @@ import com.j25.pollsterservice.model.Questionnaire;
 import com.j25.pollsterservice.repository.QuestionRepository;
 import com.j25.pollsterservice.repository.QuestionnaireRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,6 +40,12 @@ public class QuestionService {
     public Optional<Question> findNextQuestion(Questionnaire questionnaire, Long last_question_id) {
 
         return questionRepository.findQuestionByQuestionnaireQuestionAndIdAfter(questionnaire, last_question_id);
+    }
+
+
+    public Page<Question> getPage(Long id, PageRequest of) {
+//        Set<Question> questionSet = questionnaireRepository.getOne(id).getQuestionSet();
+      return questionRepository.findAllByQuestionnaireQuestionId(id, of);
     }
 
     public Long[] findByQuestionnarieQuestionId(Long questionnaireId) {

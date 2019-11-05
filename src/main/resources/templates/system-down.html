@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index page</title>
+    <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
+</head>
+<body class="bg text-center">
+<main role="main" class="mainIndex">
+    <th:block th:replace="fragments :: navigator" th:remove="tag"/>
+    <div class="spinner-grow" style="width: 15rem; height: 15rem; margin-bottom: 15%; margin-top: 15%" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</main>
+
+<th:block th:replace="fragments :: footer" th:remove="tag"/>
+<th:block th:replace="fragments :: scripts" th:remove="tag"/>
+</body>
+</html>
