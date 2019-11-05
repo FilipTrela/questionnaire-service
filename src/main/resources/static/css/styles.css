@@ -133,13 +133,14 @@ HEAD
     padding: 0 5px 0 5px;
 }
 
-/*.footer {*/
-/*position: absolute;*/
-/*bottom: 0;*/
-/*width: 644px;*/
-/*height: 40px;*/
-/*margin: 0 auto;*/
-/*}*/
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 644px;
+    height: 40px;
+    margin: 0 auto;
+}
+
 /*html,*/
 /*body,*/
 /*header,*/
@@ -162,7 +163,7 @@ HEAD
 .bg {
     /* The image used */
     background-image: url('../image/back2.png');
-    /*background-size: 100%;*/
+    background-size: 120%;
 
     /* Full height */
     height: 100%;
@@ -170,7 +171,7 @@ HEAD
     /* Center and scale the image nicely */
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    /*background-size: cover;*/
 }
 
 .paddingless {
@@ -257,5 +258,32 @@ HEAD
     background-repeat: no-repeat;
     border: 0;
     height: 50px;
-    width: 200px;
+    width: 150px;
+}
+
+.register {
+    background-image: url('../image/registerBTN.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    border: 0;
+    height: 50px;
+    width: 150px;
+}
+
+.back {
+    background-image: url('../image/back.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    border: 0;
+    height: 40px;
+    width: 150px;
+}
+
+.addQuestion {
+    background-image: url('../image/addQuestion.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    border: 0;
+    height: 46px;
+    width: 150px;
 }

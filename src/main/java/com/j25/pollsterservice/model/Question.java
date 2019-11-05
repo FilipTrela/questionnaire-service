@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Data
@@ -38,5 +39,7 @@ public class Question {
     @ManyToOne(fetch = FetchType.LAZY)
     private Questionnaire questionnaireQuestion;
 
-
+    public Set<PossibleAnswer> getCorrectAnswers() {
+        return possibleAnswers.stream().filter(possibleAnswer -> possibleAnswer.getIsCorrect()).collect(Collectors.toSet());
+    }
 }
