@@ -30,9 +30,11 @@
         <td th:text="${#temporals.format( quest.getAddingDate(),'yyyy-MM-dd HH:mm')}"></td>
         <td th:text="${#temporals.format( quest.getEndingDate(),'yyyy-MM-dd HH:mm')}"></td>
         <td>
+
             <a th:href="@{'/questionnaire/remove/'+${quest.getId()}}" sec:authorize="hasRole('ADMIN')" class="btn btn-del" role="button"></a>
             <a th:href="@{'/public/fill/'+${quest.getId()}}" class="btn btn-fil" role="button"></a>
             <a th:href="@{'/question/list/'+${quest.getId()}}"  class="btn btn-open" role="button"></a>
+
         </td>
     </tbody>
 </table>
@@ -68,6 +70,18 @@
         <!--</ul>-->
     <!--</nav>-->
 <!--</div>-->
+
+
+<!--<div class="row" style="margin-left: 75%; margin-bottom: 10%;">-->
+    <!--<a th:href="@{'/question/add/'+${questionnaryID}}">-->
+        <!--<button type="button" class="btn addQuestion"></button>-->
+    <!--</a>-->
+    <!--<a th:href="@{/questionnaire/list}">-->
+        <!--<button type="button" class="btn continue"></button>-->
+    <!--</a>-->
+<!--</div>-->
+
+
 
 <th:block th:replace="fragments :: footer" th:remove="tag"/>
 <th:block th:replace="fragments :: scripts" th:remove="tag"/>
