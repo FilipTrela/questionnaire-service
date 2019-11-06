@@ -9,12 +9,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Controller
 @AllArgsConstructor
@@ -43,21 +41,26 @@ public class QuestionController {
     public String listQuestionFromQuestionnaryPagination(Model model,
                                                          @PathVariable(name = "id") Long id,
                                                          @RequestParam(name = "page", defaultValue = "0") int page,
-                                                         @RequestParam(name = "size", defaultValue = "5") int size, HttpServletRequest request) {
+                                                         @RequestParam(name = "size", defaultValue = "5") int size) {
         Page<Question> questionPage = questionService.getPage(id, PageRequest.of(page, size));
         model.addAttribute("questions", questionPage);
-        model.addAttribute("referer", request.getHeader("referer"));
         model.addAttribute("questionnaryID", id);
+        model.addAttribute("title", questionService.getQuestionnaryTitle(id));
         return "question-list";
     }
 
     @GetMapping("/add/{id}")
     public String addQuestionToQuestionnary(Model model, QuestionCreateRequest request, @PathVariable(name = "id") Long id) {
+//        model.addAttribute("questionnaryID", id);
         request.setQuestionnarieID(id);
         model.addAttribute("request", request);
 
         return "question-add";
-
     }
 
+    @PostMapping("/add")
+    public String add(@Valid QuestionCreateRequest request) {
+        questionService.addQuestion(request);
+        return "redirect:/question/list/" + request.getQuestionnarieID();
+    }
 }

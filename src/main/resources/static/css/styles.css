@@ -79,8 +79,6 @@
     flex: 1;
 }
 
-HEAD
-
 @media (min-width: 900px) {
     >>> >>> > master
     .flex-md-equal > * {
@@ -147,31 +145,37 @@ HEAD
 /*.view {*/
 /*height: 100%;*/
 /*}*/
-@media (max-width: 900px) {
-    >>> >>> > master
-    html,
-    body,
-    header,
-    .view {
-        height: 100vh;
-    }
-}
-
-/*body, html {*/
-/*height: 100%;*/
+/*@media (max-width: 900px) {*/
+    /*html,*/
+    /*body,*/
+    /*header,*/
+    /*.view {*/
+        /*height: 100%;*/
+    /*}*/
 /*}*/
-.bg {
-    /* The image used */
-    background-image: url('../image/back2.png');
-    background-size: 120%;
 
-    /* Full height */
+html{
     height: 100%;
+}
+body{
+    height: fit-content;
+    background-image: url('../image/back2.png');
+    /*background-size: 120%;*/
 
     /* Center and scale the image nicely */
     background-position: center;
     background-repeat: no-repeat;
-    /*background-size: cover;*/
+    background-size: cover;
+}
+header,
+.view {
+    height: 100%;
+}
+/*body, html {*/
+/*height: 100%;*/
+/*}*/
+.bg {
+    /*opacity:1;*/
 }
 
 .paddingless {
@@ -283,7 +287,87 @@ HEAD
     background-image: url('../image/addQuestion.png');
     background-size: 100%;
     background-repeat: no-repeat;
+    background-position: center;
     border: 0;
     height: 46px;
     width: 150px;
+}
+
+.delete {
+    background-image: url('../image/delete.png');
+    background-size: 105%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 0;
+    height: 42px;
+    width: 220px;
+}
+
+.btn-del {
+    background-image: url('../image/deleteb.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 140px;
+    height: 25px;
+
+}
+
+.btn-edi {
+    background-image: url('../image/editb.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 82px;
+    height: 25px;
+
+}
+
+.btn-fil {
+    background-image: url('../image/fill.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 75px;
+    height: 25px;
+
+}
+
+.btn-open {
+    background-image: url('../image/openb.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 100px;
+    height: 25px;
+
+}
+
+.continue {
+    background-image: url('../image/continue.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 40px;
+    width: 273px;
+}
+
+.edit {
+    background-image: url('../image/edit.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 42px;
+    width: 130px;
+}
+
+.start {
+    background-image: url('../image/start.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    border: 0;
+    height: 47px;
+    width: 210px;
+}
+.btn-stats{
+    background-image: url('../image/stast.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    border: 0;
+    height: 25px;
+    width: 112px;
 }

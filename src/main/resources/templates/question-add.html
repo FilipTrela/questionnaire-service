@@ -13,58 +13,64 @@
     </div>
 </center>
 <form id="form" th:action="@{/question/add}" method="post" th:object="${request}" style="margin-left: 15%">
-    <div class="form-row col-md-12">
-        <div class="form-row">
-            <div class="form-group col-md-10">
-                <label for="exampleInputPassword1"><p class="h6">Question</p></label>
-                <textarea type="text" class="form-control" minlength="10" id="exampleInputPassword1"
-                          placeholder="Description"
-                          th:field="*{content}" rows="3"></textarea>
-            </div>
+    <input type="hidden" name="questionnaryID" th:field="*{questionnarieID}">
+    <div class="form-row">
+        <div class="form-group col-md-10">
+            <label for="exampleInputPassword1"><p class="h4">Question</p></label>
+            <textarea type="text" class="form-control" minlength="10" id="exampleInputPassword1"
+                      placeholder="Question"
+                      th:field="*{content}" rows="3"></textarea>
+            <p aria-describedby="emailHelp" class="h4" style="margin-top: 10px">Answers</p>
+            <small id="emailHelp" class="form-text text-muted">You should type at least two answers.
+            </small>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-10">
-                <label for="exampleInputAnswer1"><p class="h6">Answer</p></label>
-                <input type="text" class="form-control" id="exampleInputAnswer1"
-                       placeholder="Enter Answer" maxlength="100" minlength="1" th:field="*{answer1}"
-                       aria-describedby="userHelp">
-                <input class="form-check-input" type="checkbox" th:default="false" th:field="*{answer1Correct}"
-                       id="defaultCheck1">
-                <label class="form-check-label" for="defaultCheck1">
-                    <p class="h6">Is Correct</p>
-                </label>
-                <label for="exampleInputAnswer1"><p class="h6">Answer</p></label>
-                <input type="text" class="form-control" id="exampleInputAnswer2"
-                       placeholder="Enter Answer" maxlength="100" minlength="1" th:field="*{answer2}"
-                       aria-describedby="userHelp">
-                <input class="form-check-input" type="checkbox" th:default="false" th:field="*{answer2Correct}"
-                       id="defaultCheck2">
-                <label class="form-check-label" for="defaultCheck1">
-                    <p class="h6">Is Correct</p>
-                </label>
-            </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-5">
+            <input type="text" class="form-control" id="exampleInputAnswer1"
+                   placeholder="Enter Answer" maxlength="100" minlength="1" th:field="*{answer1}"
+                   aria-describedby="userHelp">
+            <input class="form-check-input" style="margin-top: 15px" type="checkbox" th:default="false"
+                   th:field="*{answer1Correct}"
+                   id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+                <p class="h6" style="margin-top: 10px">Is Correct</p>
+            </label>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-10">
-                <label for="exampleInputAnswer1"><p class="h6">Answer</p></label>
-                <input type="text" class="form-control" id="exampleInputAnswer3"
-                       placeholder="Enter Answer" maxlength="100" th:field="*{answer3}"
-                       aria-describedby="userHelp">
-                <input class="form-check-input" type="checkbox" th:default="false" th:field="*{answer3Correct}"
-                       id="defaultCheck3">
-                <label class="form-check-label" for="defaultCheck1">
-                    <p class="h6">Is Correct</p>
-                </label>
-                <label for="exampleInputAnswer1"><p class="h6">Answer</p></label>
-                <input type="text" class="form-control" id="exampleInputAnswer4"
-                       placeholder="Enter Answer" maxlength="100" th:field="*{answer4}"
-                       aria-describedby="userHelp">
-                <input class="form-check-input" type="checkbox" th:default="false" th:field="*{answer4Correct}"
-                       id="defaultCheck4">
-                <label class="form-check-label" for="defaultCheck1">
-                    <p class="h6">Is Correct</p>
-                </label>
-            </div>
+        <div class="form-group col-md-5">
+            <input type="text" class="form-control" id="exampleInputAnswer2"
+                   placeholder="Enter Answer" maxlength="100" minlength="1" th:field="*{answer2}"
+                   aria-describedby="userHelp">
+            <input class="form-check-input" style="margin-top: 15px" type="checkbox" th:default="false"
+                   th:field="*{answer2Correct}"
+                   id="defaultCheck2">
+            <label class="form-check-label" for="defaultCheck1">
+                <p class="h6" style="margin-top: 10px">Is Correct</p>
+            </label>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-5">
+            <input type="text" class="form-control" id="exampleInputAnswer3"
+                   placeholder="Enter Answer" maxlength="100" th:field="*{answer3}"
+                   aria-describedby="userHelp">
+            <input class="form-check-input" style="margin-top: 15px" type="checkbox" th:default="false"
+                   th:field="*{answer3Correct}"
+                   id="defaultCheck3">
+            <label class="form-check-label" for="defaultCheck1">
+                <p class="h6" style="margin-top: 10px">Is Correct</p>
+            </label>
+        </div>
+        <div class="form-group col-md-5">
+            <input type="text" class="form-control" id="exampleInputAnswer4"
+                   placeholder="Enter Answer" maxlength="100" th:field="*{answer4}"
+                   aria-describedby="userHelp">
+            <input class="form-check-input" style="margin-top: 15px" type="checkbox" th:default="false"
+                   th:field="*{answer4Correct}"
+                   id="defaultCheck4">
+            <label class="form-check-label" for="defaultCheck1">
+                <p class="h6" style="margin-top: 10px">Is Correct</p>
+            </label>
         </div>
     </div>
     <button type="submit" class="btn sumbit" style="margin-right: 20%"></button>
