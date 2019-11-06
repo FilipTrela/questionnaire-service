@@ -5,16 +5,26 @@
     <title>Question statistic</title>
     <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
-
+    <script type="text/javascript"  th:src="@{/js/questionScript.js}"></script>
 </head>
 <body class="bg text-center">
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
-<!--<center>-->
-    <!--<div class="col-md-12 view overlay zoom animated" style="margin-top: 8%" >-->
-        <!--<canvas id="questionChart" ></canvas>-->
-    <!--</div>-->
-<!--</center>-->
-<!--<script type="text/javascript" th:inline="javascript" th:src="@{/js/questionScript.js}"></script>-->
+<script type="text/javascript" th:inline="javascript" >
+
+    /*<![CDATA[*/
+    console.log("dupa");
+    var data = /*[[${question.getContent()}]]*/ 'question';
+    console.log(data);
+    /*]]>*/
+
+</script>
+
+<center>
+    <div class="col-md-12 view overlay zoom animated" style="padding-top: 8%" >
+        <canvas id="questionChart" ></canvas>
+    </div>
+</center>
+
 
 
 

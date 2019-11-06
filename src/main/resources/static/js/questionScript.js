@@ -1,7 +1,4 @@
-var answers= /*[[${answerList}]]*/ {};
-console.log(answers.toString());
-
-
+console.log("dupa2")
 
 new Chart(document.getElementById("questionChart"), {
     type: 'doughnut',
@@ -18,7 +15,7 @@ new Chart(document.getElementById("questionChart"), {
     options: {
         title: {
             display: true,
-            text: 'Predicted world population (millions) in 2050'
+            text: data
         }
     }
 });
