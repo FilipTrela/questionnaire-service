@@ -14,9 +14,10 @@ public class QuestionCreateRequest {
     String content;
     @NotNull
     Long questionnarieID;
-
+    @NotNull
     String answer1;
     Boolean answer1Correct;
+    @NotNull
     String answer2;
     Boolean answer2Correct;
     String answer3;

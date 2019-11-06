@@ -46,6 +46,7 @@ public class QuestionnarieService {
 
     public List<Questionnaire> findAllPublic() {
         return questionnaireRepository.findAllByIsPrivateFalse();
+//        return questionnaireRepository.findAllByIsPrivateFalseaAndQuestionSetGreaterThan1();
     }
 
     public void delete(Long questionnaireId, String name) {

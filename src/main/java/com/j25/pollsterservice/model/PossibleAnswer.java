@@ -33,4 +33,9 @@ public class PossibleAnswer {
     @Cascade(value = org.hibernate.annotations.CascadeType.DELETE)
     private Set<Answer> chosenAnswers;
 
+    public PossibleAnswer(Boolean isCorrect, String content, Question question) {
+        this.isCorrect = isCorrect;
+        this.content = content;
+        this.question = question;
+    }
 }

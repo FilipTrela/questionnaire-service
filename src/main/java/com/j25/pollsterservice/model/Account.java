@@ -54,7 +54,7 @@ public class Account {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
-    @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
+    @Cascade(value = org.hibernate.annotations.CascadeType.DELETE)
     private Set<Questionnaire> questionnaireSet;
 
     @EqualsAndHashCode.Exclude

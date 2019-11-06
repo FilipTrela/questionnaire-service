@@ -5,56 +5,55 @@
     <title>Registration form</title>
     <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
 </head>
-<body>
+<body class="bg">
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
-<div class="container">
-    <h1>Question <span th:text="${data.getCounter()-1}"></span>/<span
+<div class="container" style="margin-top: 5%">
+    <h1 class="display-2" style="color: #966364; margin-left: 20%">Question <span
+            th:text="${data.getCounter()-1}"></span>/<span
             th:text="${data.getQuestionnaireQuestionIdTab().length}"></span></h1>
     <!--<form th:action="@{'/public/answer/'+${data.getQuestionnarieId()}+'/'+${data.getAnonymousUserId()}}" method="post" th:object="${data}">-->
     <form th:action="@{/public/answer}" method="post" th:object="${data}">
 
-        <div class="row col-12 form-container">
-            <input type="hidden" th:field="*{questionnarieId}" th:value="*{questionnarieId}">
-            <input type="hidden" th:field="*{anonymousUserId}" th:value="*{anonymousUserId}">
-            <!--<input type="hidden" th:field="*{questionId}" th:value="*{questionId}">-->
-            <input type="hidden" th:field="*{counter}" th:value="*{counter}">
-            <input type="hidden" th:field="*{questionnaireQuestionIdTab}" th:value="*{questionnaireQuestionIdTab}">
+        <input type="hidden" th:field="*{questionnarieId}" th:value="*{questionnarieId}">
+        <input type="hidden" th:field="*{anonymousUserId}" th:value="*{anonymousUserId}">
+        <!--<input type="hidden" th:field="*{questionId}" th:value="*{questionId}">-->
+        <input type="hidden" th:field="*{counter}" th:value="*{counter}">
+        <input type="hidden" th:field="*{questionnaireQuestionIdTab}" th:value="*{questionnaireQuestionIdTab}">
 
-            <div class="row col-md-12 form-input-row">
-                <div>
-                    <div class="col-md-12" th:text="${question.getContent()}"></div>
-                </div>
-
-                <div th:each="answer : ${question.getPossibleAnswers()}" class="col-md-12">
-                    <!--<input class="form-control" type="text" id="questionContent" th:text="${answer.getContent()}">-->
-                    <input type="radio"
-                           th:field="*{answerId}"
-                           th:value="${answer.getId()}"/>
-                    <label
-                            th:for="${answer.getId()}"
-                            th:text="${answer.getContent()}"></label>
-                </div>
-
-                <!--<div th:each="answer : ${data.getQuestion().getPossibleAnswers()}">-->
-                <!--<input type="radio" th:field="${data.getAnswer().getId()}"-->
-                <!--th:value="${answer.getId()}" />-->
-                <!--<label th:for="${answer.getId()}"-->
-                <!--th:text="${answer.getContent()}"></label>-->
-                <!--</div>-->
-
-
+        <div class="row col-md-12 form-input-row">
+            <div>
+                <div class="col-md-12" th:text="${question.getContent()}"></div>
             </div>
 
-            <div class="row col-md-12 form-button-row">
-                <div class="col-md-6">
-                    <button type="reset" class="btn btn-warning offset-3 col-md-6">Reset</button>
-                </div>
-                <div class="col-md-6" th:if="${data.getQuestionnaireQuestionIdTab().length}>${data.getCounter()-1}">
-                    <button type="submit" class="btn btn-primary offset-3 col-md-6">Submit</button>
-                </div>
-                <div class="col-md-6" th:if="${data.getQuestionnaireQuestionIdTab().length}==${data.getCounter()-1}">
-                    <button type="submit" class="btn btn-primary offset-3 col-md-6">Submit and end</button>
-                </div>
+            <div th:each="answer : ${question.getPossibleAnswers()}" class="form-check col-md-12">
+                <!--<input class="form-control" type="text" id="questionContent" th:text="${answer.getContent()}">-->
+                <input class="form-check-input" type="radio"
+                       th:field="*{answerId}"
+                       th:value="${answer.getId()}"/>
+                <label class="form-check-label"
+                       th:for="${answer.getId()}"
+                       th:text="${answer.getContent()}"></label>
+            </div>
+
+            <!--<div th:each="answer : ${data.getQuestion().getPossibleAnswers()}">-->
+            <!--<input type="radio" th:field="${data.getAnswer().getId()}"-->
+            <!--th:value="${answer.getId()}" />-->
+            <!--<label th:for="${answer.getId()}"-->
+            <!--th:text="${answer.getContent()}"></label>-->
+            <!--</div>-->
+
+
+        </div>
+
+        <div class="row col-md-12 form-button-row">
+            <div class="col-md-6">
+                <button type="reset" class="btn btn-warning offset-3 col-md-6">Reset</button>
+            </div>
+            <div class="col-md-6" th:if="${data.getQuestionnaireQuestionIdTab().length}>${data.getCounter()-1}">
+                <button type="submit" class="btn btn-primary offset-3 col-md-6">Submit</button>
+            </div>
+            <div class="col-md-6" th:if="${data.getQuestionnaireQuestionIdTab().length}==${data.getCounter()-1}">
+                <button type="submit" class="btn btn-primary offset-3 col-md-6">Submit and end</button>
             </div>
         </div>
     </form>

@@ -15,6 +15,8 @@ public interface QuestionnaireRepository extends JpaRepository<Questionnaire, Lo
     List<Questionnaire> findAllByAccount(Account account);
 
     List<Questionnaire> findAllByIsPrivateFalse();
+
+//    List<Questionnaire> findAllByIsPrivateFalseaAndQuestionSetGreaterThan1();
 }
 
 

@@ -39,7 +39,22 @@ public class Question {
     @ManyToOne(fetch = FetchType.LAZY)
     private Questionnaire questionnaireQuestion;
 
-    public Set<PossibleAnswer> getCorrectAnswers() {
-        return possibleAnswers.stream().filter(possibleAnswer -> possibleAnswer.getIsCorrect()).collect(Collectors.toSet());
+    public Set<String> getCorrectAnswers() {
+        return possibleAnswers.stream()
+                .filter(PossibleAnswer::getIsCorrect)
+                .map(PossibleAnswer::getContent)
+                .collect(Collectors.toSet());
+    }
+
+    public Set<String> getAllAnswers() {
+        return possibleAnswers.stream()
+                .map(PossibleAnswer::getContent)
+                .collect(Collectors.toSet());
+    }
+
+    public Question(String content, QuestionType questionType, Questionnaire questionnaireQuestion) {
+        this.content = content;
+        this.questionType = questionType;
+        this.questionnaireQuestion = questionnaireQuestion;
     }
 }
