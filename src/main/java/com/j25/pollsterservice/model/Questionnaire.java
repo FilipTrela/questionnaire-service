@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -30,7 +31,8 @@ public class Questionnaire {
 
     private LocalDateTime endingDate;
 
-    private boolean isPrivate;
+    @NotNull
+    private Boolean isPrivate;
 
 
 

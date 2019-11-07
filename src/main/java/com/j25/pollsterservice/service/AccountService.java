@@ -5,6 +5,7 @@ import com.j25.pollsterservice.model.Account;
 import com.j25.pollsterservice.model.AccountRole;
 import com.j25.pollsterservice.model.dto.AccountPasswordResetRequest;
 import com.j25.pollsterservice.model.dto.CreateNewAccountRequest;
+import com.j25.pollsterservice.model.dto.EditAccountRequest;
 import com.j25.pollsterservice.repository.AccountRepository;
 import com.j25.pollsterservice.repository.AccountRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.*;
 
 @Service
@@ -47,6 +49,23 @@ public class AccountService {
         accountRepository.save(account);
 
         return true;
+    }
+
+    public boolean edit(EditAccountRequest request, Principal principal) {
+        Optional<Account> accountOptional = accountRepository.findByUsername(principal.getName());
+        if(accountOptional.isPresent()){
+            Account account = accountOptional.get();
+            account.setName(request.getName());
+            account.setSurname(request.getSurname());
+            account.setPhone(request.getPhone());
+            account.setUserEmail(request.getUserEmail());
+            accountRepository.save(account);
+            return true;
+        }
+
+        return false;
+
+
     }
 
     public List<Account> getAll() {
@@ -120,4 +139,11 @@ public class AccountService {
         }
         return false;
     }
+
+    public Optional<Account> findByUsername(String name) {
+        return accountRepository.findByUsername(name);
+
+    }
+
+
 }

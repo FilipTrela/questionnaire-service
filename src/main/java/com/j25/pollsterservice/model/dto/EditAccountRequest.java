@@ -5,23 +5,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateQuestionnaireRequest {
+public class EditAccountRequest {
 
 
     @NotNull
-    String title;
-
+    private String name;
     @NotNull
-    String description;
-
-    LocalDateTime endingDate;
-
+    private String surname;
     @NotNull
-    Boolean isPrivate;
+    private String userEmail;
+    @NotNull
+    private String phone;
 
 }
