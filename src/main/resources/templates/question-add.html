@@ -8,16 +8,21 @@
 <body class="bg text-center">
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
 <center>
-    <div class="row col-md-4" style="margin-top: 100px">
+    <div class="row col-md-4" style="margin-top: 7%">
         <img th:src="@{/image/addQuestion.png}" class="img-fluid rounded">
     </div>
 </center>
-<form id="form" th:action="@{/question/add}" method="post" th:object="${request}" style="margin-left: 15%">
+<form id="form" th:class="${errorMessage != null ? 'col-md-12' : 'col-md-12 animated delay-1s fadeInDown slow'}"
+      th:action="@{/question/add}" method="post" th:object="${request}">
+    <div th:if="${errorMessage != null}" class="row col-md-12 form-input-row">
+        <div class="col-md-6 offset-3 alert alert-danger animated bounce infinite slower"
+             th:text="${errorMessage}"></div>
+    </div>
     <div class="hidden" th:if="*{questionnarieID}">
         <input type="hidden" name="questionnaryID" th:field="*{questionnarieID}">
     </div>
-    <div class="form-row">
-        <div class="form-group col-md-10">
+    <div class="form-row col-md-12">
+        <div class="form-group col-md-10 offset-1">
             <label for="exampleInputPassword1"><p class="h4">Question</p></label>
             <textarea type="text" class="form-control" minlength="10" id="exampleInputPassword1"
                       placeholder="Question"
@@ -27,8 +32,8 @@
             </small>
         </div>
     </div>
-    <div class="form-row">
-        <div class="form-group col-md-5">
+    <div class="form-row col-md-12">
+        <div class="form-group col-md-5 offset-1">
             <input type="text" class="form-control" id="exampleInputAnswer1"
                    placeholder="Enter Answer" maxlength="100" minlength="1" th:field="*{answer1}"
                    aria-describedby="userHelp">
@@ -51,8 +56,8 @@
             </label>
         </div>
     </div>
-    <div class="form-row">
-        <div class="form-group col-md-5">
+    <div class="form-row col-md-12">
+        <div class="form-group col-md-5 offset-1">
             <input type="text" class="form-control" id="exampleInputAnswer3"
                    placeholder="Enter Answer" maxlength="100" th:field="*{answer3}"
                    aria-describedby="userHelp">
@@ -75,7 +80,8 @@
             </label>
         </div>
     </div>
-    <button type="submit" class="btn sumbit" style="margin-right: 20%"></button>
+    <button type="submit"
+            th:class="${errorMessage != null ? 'btn sumbit' : 'btn sumbit animated delay-2s fadeInDown slower'}"></button>
 </form>
 <th:block th:replace="fragments :: footer" th:remove="tag"/>
 <th:block th:replace="fragments :: scripts" th:remove="tag"/>

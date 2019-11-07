@@ -23,14 +23,14 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="quest,index : ${questionnaires}" th:if="${quest.getQuestionSet().size()>1}">
+    <tr th:each="quest,index : ${questionnaires}" th:if="${quest.getQuestionSet().size()>1||account.canOpen(quest)}">
         <!--jezeli ma pytania   -->
         <th scope="row" th:text="1+${index.index}"></th>
         <td th:text="${quest.getTitle()}"></td>
         <td th:text="${quest.getDescription()}"></td>
         <td th:text="${#temporals.format( quest.getAddingDate(),'yyyy-MM-dd HH:mm')}"></td>
         <td th:text="${#temporals.format( quest.getEndingDate(),'yyyy-MM-dd HH:mm')}"></td>
-        <td class="animated fadeInRight slower delay-2s">
+        <td class="animated fadeInDown slower delay-2s">
             <a th:href="@{'/public/fill/'+${quest.getId()}}" class="btn btn-fil" role="button"></a>
             <a sec:authorize="isAuthenticated()" th:if="${account.canOpen(quest)}"
                th:href="@{'/question/list/'+${quest.getId()}}" class="btn btn-open" role="button"></a>

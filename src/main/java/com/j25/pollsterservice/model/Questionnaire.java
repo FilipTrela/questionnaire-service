@@ -3,10 +3,8 @@ package com.j25.pollsterservice.model;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -31,9 +29,7 @@ public class Questionnaire {
 
     private LocalDateTime endingDate;
 
-    @NotNull
     private Boolean isPrivate;
-
 
 
     @ManyToOne(fetch = FetchType.LAZY)

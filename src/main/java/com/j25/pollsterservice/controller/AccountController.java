@@ -173,22 +173,33 @@ public class AccountController {
                               Model model) {
 
         if (result.hasErrors()) {
-            return editingError(model, request, result.getFieldError().getDefaultMessage());
+            return editingError(model, request, principal, result.getFieldError().getDefaultMessage());
         }
-
-
+        if (request.getUserEmail().isEmpty()) {
+            return editingError(model, request, principal, "Please type email");
+        }
+        if (request.getPhone().isEmpty()) {
+            return editingError(model, request, principal, "Please type phone number");
+        }
+        if (request.getName().isEmpty()) {
+            return editingError(model, request, principal, "Please type name");
+        }
+        if (request.getSurname().isEmpty()) {
+            return editingError(model, request, principal, "Please type surname");
+        }
         if (!accountService.edit(request, principal)) {
-            return editingError(model, request, "Something went wrong");
+            return editingError(model, request, principal, "Something went wrong");
         }
 
         return "redirect:/";
     }
 
-    private String editingError(Model model, EditAccountRequest account, String message) {
-        model.addAttribute("newAccount", account);
+    private String editingError(Model model, EditAccountRequest request, Principal principal, String message) {
+        model.addAttribute("editAccount", request);
+        model.addAttribute("principal", principal);
         model.addAttribute("errorMessage", message);
 
-        return "registration-form";
+        return "account-edit-form";
 
     }
 
