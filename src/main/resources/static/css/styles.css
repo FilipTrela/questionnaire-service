@@ -80,7 +80,6 @@
 }
 
 @media (min-width: 900px) {
-    >>> >>> > master
     .flex-md-equal > * {
         -ms-flex: 1;
         flex: 1;
@@ -109,7 +108,6 @@
     padding: 0 5px 0 5px;
 }
 
->>> >>> > master
 .overflow-hidden {
     overflow: hidden;
 }
@@ -146,18 +144,21 @@
 /*height: 100%;*/
 /*}*/
 /*@media (max-width: 900px) {*/
-    /*html,*/
-    /*body,*/
-    /*header,*/
-    /*.view {*/
-        /*height: 100%;*/
-    /*}*/
+/*html,*/
+/*body,*/
+/*header,*/
+/*.view {*/
+/*height: 100%;*/
+/*}*/
 /*}*/
 
-html{
+html {
     height: 100%;
+    width: 100%;
 }
-body{
+
+body {
+    width: 100%;
     height: fit-content;
     background-image: url('../image/back2.png');
     /*background-size: 120%;*/
@@ -167,10 +168,12 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
 }
+
 header,
 .view {
     height: 100%;
 }
+
 /*body, html {*/
 /*height: 100%;*/
 /*}*/
@@ -237,7 +240,6 @@ header,
     background-color: #966364;
     color: #1fc9ce;
     padding: 1px;
-!important;
 }
 
 .dropListElement p {
@@ -291,16 +293,6 @@ header,
     border: 0;
     height: 46px;
     width: 150px;
-}
-
-.delete {
-    background-image: url('../image/delete.png');
-    background-size: 105%;
-    background-repeat: no-repeat;
-    background-position: center;
-    border: 0;
-    height: 42px;
-    width: 220px;
 }
 
 .btn-del {
@@ -367,10 +359,21 @@ header,
 
 .edit {
     background-image: url('../image/edit.png');
-    background-size: 100%;
+    background-size: 110%;
     background-repeat: no-repeat;
-    height: 42px;
-    width: 130px;
+    background-position: center;
+    height: 35px;
+    width: 100px;
+}
+
+.delete {
+    background-image: url('../image/delete.png');
+    background-size: 105%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 0;
+    height: 35px;
+    width: 180px;
 }
 
 .start {
@@ -381,11 +384,35 @@ header,
     height: 47px;
     width: 210px;
 }
-.btn-stats{
+
+.btn-stats {
     background-image: url('../image/stast.png');
     background-size: 100%;
     background-repeat: no-repeat;
     border: 0;
     height: 25px;
     width: 112px;
+}
+
+.btn-backTo {
+    background-image: url('../image/backToHome.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    border: 0;
+    height: 60px;
+    width: 200px;
+}
+
+.btn-backToQL {
+    background-image: url('../image/backToQuestionaire.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    border: 0;
+    height: 65px;
+    width: 200px;
+}
+
+.thanks {
+    height: 35%;
+    width: 35%;
 }
