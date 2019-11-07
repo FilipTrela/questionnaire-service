@@ -1,6 +1,7 @@
 package com.j25.pollsterservice.controller;
 
 import com.j25.pollsterservice.model.dto.CreateNewAccountRequest;
+import com.j25.pollsterservice.model.dto.EditAccountRequest;
 import com.j25.pollsterservice.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
+import java.util.Optional;
 
 
 @Controller
@@ -51,6 +54,7 @@ public class AccountController {
         if (emailIsEmpty(request)) {
             return registrationError(model, request, "You must type email.");
 
+
         }
         if (numberIsEmpty(request)) {
             return registrationError(model, request, "You must type phone number.");
@@ -67,6 +71,12 @@ public class AccountController {
         if (stringContainsNumber(request.getName())) {
             return registrationError(model, request, "You cant type number in your name.");
         }
+
+//        if (!request.getPassword().equals(passwordConfirm)) {
+//            return registrationError(model, request, "Passwords do not match.");
+//        }
+
+
         if (!accountService.register(request)) {
             return registrationError(model, request, "User with given username already exists.");
         }
@@ -81,6 +91,7 @@ public class AccountController {
 
         return "registration-form";
     }
+
 
     private boolean passwordGrantStantard(String password) {
         boolean isGood = true;
@@ -135,6 +146,48 @@ public class AccountController {
 
     private boolean numberIsEmpty(CreateNewAccountRequest request) {
         return request.getPhone().length() < 1;
+
+    @GetMapping("/edit")
+    public String editForm(Model model, EditAccountRequest request, Principal principal) {
+        Optional<Account> accountOptional = accountService.findByUsername(principal.getName());
+        if(accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            request.setName(account.getName());
+            request.setPhone(account.getPhone());
+            request.setSurname((account.getSurname()));
+            request.setUserEmail(account.getUserEmail());
+
+            model.addAttribute("editAccount", request);
+            model.addAttribute("principal", principal);
+        }
+
+        return "account-edit-form";
+    }
+
+    @PostMapping("/edit")
+    public String editAccount(@Valid EditAccountRequest request,
+                           BindingResult result,
+                           Principal principal,
+                           Model model) {
+
+        if (result.hasErrors()) {
+            return editingError(model, request, result.getFieldError().getDefaultMessage());
+        }
+
+
+        if (!accountService.edit(request, principal)) {
+            return editingError(model, request, "Something went wrong");
+        }
+
+        return "redirect:/";
+    }
+    private String editingError(Model model, EditAccountRequest account, String message) {
+        model.addAttribute("newAccount", account);
+        model.addAttribute("errorMessage", message);
+
+        return "registration-form";
+
     }
 
 }
+

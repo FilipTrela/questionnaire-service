@@ -1,9 +1,13 @@
 package com.j25.pollsterservice.controller;
 
+import com.j25.pollsterservice.model.Answer;
+import com.j25.pollsterservice.model.PossibleAnswer;
 import com.j25.pollsterservice.model.Question;
 import com.j25.pollsterservice.model.dto.QuestionCreateRequest;
+import com.j25.pollsterservice.service.AnswerService;
 import com.j25.pollsterservice.service.QuestionService;
 import lombok.AllArgsConstructor;
+import net.bytebuddy.agent.builder.AgentBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +17,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 @Controller
 @AllArgsConstructor
@@ -21,6 +32,7 @@ import javax.validation.Valid;
 public class QuestionController {
 
     private QuestionService questionService;
+    private AnswerService answerService;
 
 //    @GetMapping("/list")
 //    public String listQuestions(Model model, Principal principal) {
@@ -63,4 +75,40 @@ public class QuestionController {
         questionService.addQuestion(request);
         return "redirect:/question/list/" + request.getQuestionnarieID();
     }
+
+
+    @GetMapping("/showStats/{question_id}")
+    public String showStatistic(Model model, Question question, @PathVariable(name = "question_id") Long questionId) {
+
+        Optional<Question> optionalQuestion = questionService.findById(questionId);
+        List<Answer> answerList = answerService.findByQuestionId(questionId);
+        if (optionalQuestion.isPresent()) {
+            question = optionalQuestion.get();
+
+            Map<String, Integer> answerCountMap = new HashMap<>();
+            for (PossibleAnswer possibleAnswer : question.getPossibleAnswers()) {
+                Integer countOfAnswer = answerList.stream().filter(answer -> answer.getAnswer().equals(possibleAnswer)).collect(Collectors.toList()).size();
+                answerCountMap.put(possibleAnswer.getContent(), countOfAnswer);
+            }
+
+            model.addAttribute("question", question);
+            model.addAttribute("answerList", answerList);
+            model.addAttribute("statMap", answerCountMap);
+        }
+
+        return "question-statistic";
+
+    }
+
+
+    @GetMapping("/delete/{deleted_question_id}")
+    public String deleteQuestion(Model model,
+                         @PathVariable(name = "deleted_question_id") Long questionId,
+                                 Principal principal,
+                                 HttpServletRequest request) {
+        questionService.delete(questionId, principal.getName());
+
+        return "redirect:"+request.getHeader("referer");
+    }
+
 }

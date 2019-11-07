@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration form</title>
+    <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
+</head>
+<body class="bg text-center">
+<th:block th:replace="fragments :: navigator" th:remove="tag"/>
+<center>
+    <div class="row col-md-5" style="margin-top: 100px">
+        <img th:src="@{/image/registration.png}" class="img-fluid rounded">
+    </div>
+</center>
+<form id="form" th:action="@{/user/edit}" method="post" th:object="${editAccount}" style="margin-left: 27%">
+    <div th:if="${errorMessage != null}" class="row col-md-8 form-input-row">
+        <div class="col-md-12 alert alert-danger" th:text="${errorMessage}"></div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="exampleInputEmail1"><p class="h6">Email address</p></label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                   placeholder="Enter email" th:field="*{userEmail}" th:value="*{userEmail}">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.
+            </small>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="exampleInputEmail1"><p class="h6">Phone Number</p></label>
+            <input type="text" class="form-control" id="phoneNumber"
+                   placeholder="+ 48" th:field="*{phone}"  th:value="*{phone}">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="exampleInputEmail1"><p class="h6">Name</p></label>
+            <input type="text" class="form-control" id="name"
+                   placeholder="Enter Name" th:field="*{name}" th:value="*{name}">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="exampleInputEmail1"><p class="h6">Surname</p></label>
+            <input type="text" class="form-control" id="surname"
+                   placeholder="Enter Surname" th:field="*{surname}" th:value="*{surname}">
+        </div>
+    </div>
+    <button type="submit" class="btn sumbit" style="margin-right: 33%"></button>
+</form>
+<th:block th:replace="fragments :: footer" th:remove="tag"/>
+<th:block th:replace="fragments :: scripts" th:remove="tag"/>
+</body>
+</html>

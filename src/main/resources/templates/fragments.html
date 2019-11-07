@@ -28,7 +28,7 @@
                     <a class="nav-link profile" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                        aria-expanded="true" style="margin-right: 10px" sec:authorize="isAuthenticated()"></a>
                     <div class="dropdown-menu menudd ">
-                        <a class="dropdown-item dropListElement" href="#"><p class="h6">Edit</p></a>
+                        <a class="dropdown-item dropListElement" th:href="@{/user/edit}"><p class="h6">Edit</p></a>
                         <a class="dropdown-item dropListElement" href="#"><p class="h6">Donate</p></a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item dropListElement" th:href="@{/logout}"><p class="h6">Logout</p></a>

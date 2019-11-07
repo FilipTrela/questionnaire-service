@@ -10,8 +10,9 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateQuestionnaireRequest {
-
+public class EditQuestionnaireRequest {
+    @NotNull
+    Long id;
 
     @NotNull
     String title;
@@ -21,7 +22,7 @@ public class CreateQuestionnaireRequest {
 
     LocalDateTime endingDate;
 
-    @NotNull
+
     Boolean isPrivate;
 
 }
