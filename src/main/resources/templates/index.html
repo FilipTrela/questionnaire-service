@@ -9,7 +9,7 @@
 <main role="main" class="mainIndex">
     <th:block th:replace="fragments :: navigator" th:remove="tag"/>
     <center>
-        <img th:src="@{/image/name.png}" class="img-fluid rounded name" th:style="${jesteAdmine ? 'margin-top: 2%' : 'margin-top: 4%'}">
+        <img th:src="@{/image/name.png}" class="img-fluid animated slow zoomInUp rounded name" th:style="${jesteAdmine ? 'margin-top: 2%' : 'margin-top: 4%'}">
         <div class="view overlay">
             <div class="col-md-6 view overlay zoom animated fadeInDown">
                 <a th:href="@{/public/listQuestionnaire}">

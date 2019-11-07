@@ -339,6 +339,24 @@ header,
 
 }
 
+.btn-next {
+    background-image: url('../image/next.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 144px;
+    height: 40px;
+
+}
+
+.btn-finish {
+    background-image: url('../image/finish.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 180px;
+    height: 40px;
+
+}
+
 .continue {
     background-image: url('../image/continue.png');
     background-size: 100%;
