@@ -4,6 +4,8 @@ import com.j25.pollsterservice.model.*;
 import com.j25.pollsterservice.model.dto.AnswerDataRequest;
 import com.j25.pollsterservice.service.*;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,13 +27,27 @@ public class PublicQuestionnaireController {
     private AccountService accountService;
 
 
+//    @GetMapping("/listQuestionnaire")
+//    public String listQuestionnaries(Model model, Principal principal) {
+//        List<Questionnaire> questionnaires = questionnarieService.findAllPublic();
+//        model.addAttribute("questionnaires", questionnaires);
+//        if (principal != null) {
+//            model.addAttribute("account", accountService.findByUsername(principal.getName()).get());
+//        }
+//        return "questionnaire-list";
+//    }
+
     @GetMapping("/listQuestionnaire")
-    public String listQuestionnaries(Model model, Principal principal) {
-        List<Questionnaire> questionnaires = questionnarieService.findAllPublic();
-        model.addAttribute("questionnaires", questionnaires);
+    public String listQuestionnariesPage(Model model,
+                                     Principal principal,
+                                     @RequestParam(name = "page", defaultValue = "0") int page,
+                                     @RequestParam(name = "size", defaultValue = "5") int size) {
+        Page<Questionnaire> questionnairePage = questionnarieService.getAllPage( PageRequest.of(page, size));
+        model.addAttribute("questionnaires", questionnairePage);
         if (principal != null) {
             model.addAttribute("account", accountService.findByUsername(principal.getName()).get());
         }
+        model.addAttribute("publicMode", "publicMode");
         return "questionnaire-list";
     }
 

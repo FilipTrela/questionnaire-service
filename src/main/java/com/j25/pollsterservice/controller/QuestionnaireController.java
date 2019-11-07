@@ -1,5 +1,7 @@
 package com.j25.pollsterservice.controller;
 
+import com.j25.pollsterservice.model.Account;
+import com.j25.pollsterservice.model.Question;
 import com.j25.pollsterservice.model.Questionnaire;
 import com.j25.pollsterservice.model.dto.CreateQuestionnaireRequest;
 
@@ -9,13 +11,12 @@ import com.j25.pollsterservice.model.dto.EditQuestionnaireRequest;
 
 import com.j25.pollsterservice.service.QuestionnarieService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -32,15 +33,32 @@ public class QuestionnaireController {
     private final AccountService accountService;
 
 
-    @GetMapping("/list")
-    public String listQuestionnaries(Model model, Principal principal) {
-        List<Questionnaire> questionnaires = questionnarieService.findAllUserQuestionnaire(principal);
-        model.addAttribute("questionnaires", questionnaires);
-        if (principal != null) {
-            model.addAttribute("account", accountService.findByUsername(principal.getName()).get());
-        }
-        return "questionnaire-list";
+//    @GetMapping("/list")
+//    public String listQuestionnaries(Model model, Principal principal) {
+//        List<Questionnaire> questionnaires = questionnarieService.findAllUserQuestionnaire(principal);
+//        model.addAttribute("questionnaires", questionnaires);
+//        if (principal != null) {
+//            model.addAttribute("account", accountService.findByUsername(principal.getName()).get());
+//        }
+//        return "questionnaire-list";
+//    }
 
+    @GetMapping("/list")
+    public String listQuestionnaries(Model model,
+                                     Principal principal,
+                                     @RequestParam(name = "page", defaultValue = "0") int page,
+                                     @RequestParam(name = "size", defaultValue = "5") int size) {
+        Optional<Account> accountOptional = accountService.findByUsername(principal.getName());
+
+
+        if(accountOptional.isPresent()){
+            Page<Questionnaire> questionnairePage = questionnarieService.getPageByUser(accountOptional.get(), PageRequest.of(page, size));
+            model.addAttribute("questionnaires", questionnairePage);
+            model.addAttribute("account", accountOptional.get());
+        }
+
+        model.addAttribute("userMode", "userMode");
+        return "questionnaire-list";
     }
 
     @GetMapping("/create")
@@ -61,13 +79,12 @@ public class QuestionnaireController {
     @GetMapping("/edit/{questionnaire_id}")
     public String editQuestionnaire(Model model,
                                     @PathVariable(name = "questionnaire_id") Long id,
-                                    EditQuestionnaireRequest request){
+                                    EditQuestionnaireRequest request) {
         Optional<Questionnaire> questionnaireOptional = questionnarieService.findById(id);
         questionnaireOptional.ifPresent(questionnaire -> model.addAttribute("questionarry", questionnaire));
 
         return "questionnarie-from";
     }
-
 
 
     @GetMapping("/remove/{remove_quest_id}")

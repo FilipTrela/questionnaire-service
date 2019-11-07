@@ -31,7 +31,7 @@ public class Questionnaire {
 
     private LocalDateTime endingDate;
 
-    @NotNull
+
     private Boolean isPrivate;
 
 
