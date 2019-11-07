@@ -1,6 +1,4 @@
-console.log("dupa2")
-
-new Chart(document.getElementById("questionChart"), {
+new Chart(document.getElementById("doughnut-chart"), {
     type: 'doughnut',
     data: {
         labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
@@ -15,7 +13,7 @@ new Chart(document.getElementById("questionChart"), {
     options: {
         title: {
             display: true,
-            text: data
+            text: 'Predicted world population (millions) in 2050'
         }
     }
 });
