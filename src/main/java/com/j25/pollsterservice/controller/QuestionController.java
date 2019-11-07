@@ -78,7 +78,10 @@ public class QuestionController {
 
 
     @GetMapping("/showStats/{question_id}")
-    public String showStatistic(Model model, Question question, @PathVariable(name = "question_id") Long questionId) {
+    public String showStatistic(Model model,
+                                Question question,
+                                @PathVariable(name = "question_id") Long questionId,
+                                HttpServletRequest request) {
 
         Optional<Question> optionalQuestion = questionService.findById(questionId);
         List<Answer> answerList = answerService.findByQuestionId(questionId);
@@ -94,6 +97,8 @@ public class QuestionController {
             model.addAttribute("question", question);
             model.addAttribute("answerList", answerList);
             model.addAttribute("statMap", answerCountMap);
+            model.addAttribute("referer", request.getHeader("referer"));
+
         }
 
         return "question-statistic";

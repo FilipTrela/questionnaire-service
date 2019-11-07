@@ -1,19 +1,32 @@
-new Chart(document.getElementById("doughnut-chart"), {
-    type: 'doughnut',
-    data: {
-        labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
-        datasets: [
-            {
-                label: "Population (millions)",
-                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-                data: [2478,5267,734,784,433]
-            }
-        ]
-    },
-    options: {
-        title: {
-            display: true,
-            text: 'Predicted world population (millions) in 2050'
-        }
-    }
+
+var dataPointsElements = [];
+
+Object.keys(statistic).forEach(function(key) {
+    // console.log(key, statistic[key]);
+    dataPointsElements.push({y: statistic[key], label: key});
 });
+
+window.onload = function() {
+
+    var chart = new CanvasJS.Chart("chartContainer", {
+        theme: "dark2", // "light1", "light2", "dark1", "dark2"
+        exportEnabled: true,
+        animationEnabled: true,
+        title: {
+            text: "Question: "+question
+        },
+        data: [{
+            type: "pie",
+            startAngle: 25,
+            toolTipContent: "<b>{label}</b>: {y}",
+            showInLegend: "true",
+            legendText: "{label}",
+            indexLabelFontSize: 20,
+            indexLabel: "{label} - {y}",
+            dataPoints: dataPointsElements
+        }]
+    });
+    chart.render();
+
+}
+
