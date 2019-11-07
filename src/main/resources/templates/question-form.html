@@ -4,15 +4,101 @@
     <meta charset="UTF-8">
     <title>Registration form</title>
     <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
+    <style>
+
+        .container ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            overflow: auto;
+        }
+
+        ul li {
+            color: #AAAAAA;
+            display: block;
+            position: relative;
+            float: left;
+            width: 100%;
+            height: 70px;
+            /*border-bottom: 1px solid #333;*/
+        }
+
+        ul li input[type=radio] {
+            position: absolute;
+            visibility: hidden;
+        }
+
+        ul li label {
+            display: block;
+            position: relative;
+            font-weight: 300;
+            font-size: 1em;
+            padding: 25px 25px 25px 80px;
+            margin: 10px auto;
+            height: 30px;
+            z-index: 9;
+            cursor: pointer;
+            -webkit-transition: all 0.25s linear;
+        }
+
+        ul li:hover label {
+            color: #FFFFFF;
+        }
+
+        ul li .check {
+            display: block;
+            position: absolute;
+            border: 5px solid #AAAAAA;
+            border-radius: 100%;
+            height: 25px;
+            width: 25px;
+            top: 30px;
+            left: 20px;
+            z-index: 5;
+            transition: border .25s linear;
+            -webkit-transition: border .25s linear;
+        }
+
+        ul li:hover .check {
+            border: 5px solid #FFFFFF;
+        }
+
+        ul li .check::before {
+            display: block;
+            position: absolute;
+            content: '';
+            border-radius: 100%;
+            height: 15px;
+            width: 15px;
+            /*top: 5px;*/
+            /*left: 5px;*/
+            margin: auto;
+            transition: background 0.25s linear;
+            -webkit-transition: background 0.25s linear;
+        }
+
+        input[type=radio]:checked ~ .check {
+            border: 5px solid #33DDFF;
+        }
+
+        input[type=radio]:checked ~ .check::before {
+            background: #33DDFF;
+        }
+
+        input[type=radio]:checked ~ label {
+            color: #33DDFF;
+        }
+    </style>
 </head>
 <body class="bg">
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
-<div class="container" style="margin-top: 5%">
-    <h1 class="display-2" style="color: #966364; margin-left: 20%">Question <span
+<div class="container" style="margin-top: 7%">
+    <h1 class="display-3 animated fadeInDown" style="color: #966364; margin-left: 20%">Question <span
             th:text="${data.getCounter()-1}"></span>/<span
             th:text="${data.getQuestionnaireQuestionIdTab().length}"></span></h1>
     <!--<form th:action="@{'/public/answer/'+${data.getQuestionnarieId()}+'/'+${data.getAnonymousUserId()}}" method="post" th:object="${data}">-->
-    <form th:action="@{/public/answer}" method="post" th:object="${data}">
+    <form class="z-depth-5 rounded animated fadeInDown" th:action="@{/public/answer}" method="post" th:object="${data}"
+          style="background-color: #966364">
 
         <input type="hidden" th:field="*{questionnarieId}" th:value="*{questionnarieId}">
         <input type="hidden" th:field="*{anonymousUserId}" th:value="*{anonymousUserId}">
@@ -22,18 +108,24 @@
 
         <div class="row col-md-12 form-input-row">
             <div>
-                <div class="col-md-12" th:text="${question.getContent()}"></div>
+                <div class="col-md-12 h3" style="color: #33DDFF; margin-top: 10px" th:text=" ${question.getContent()}
+                ">
+                </div>
             </div>
 
-            <div th:each="answer : ${question.getPossibleAnswers()}" class="form-check col-md-12">
-                <!--<input class="form-control" type="text" id="questionContent" th:text="${answer.getContent()}">-->
-                <input class="form-check-input" type="radio"
-                       th:field="*{answerId}"
-                       th:value="${answer.getId()}"/>
-                <label class="form-check-label"
-                       th:for="${answer.getId()}"
-                       th:text="${answer.getContent()}"></label>
-            </div>
+            <ul class="form-check col-md-12">
+                <li th:each="answer,index : ${question.getPossibleAnswers()}">
+                    <input type="radio" th:id="${'f-option'+answer.getId()}"
+                           th:field="*{answerId}"
+                           th:value="${answer.getId()}"
+                           th:checked="${true}">
+                    <label th:for="${'f-option'+answer.getId()}"
+                           th:text="${answer.getContent()}">
+
+                    </label>
+                    <div class="check"></div>
+                </li>
+            </ul>
 
             <!--<div th:each="answer : ${data.getQuestion().getPossibleAnswers()}">-->
             <!--<input type="radio" th:field="${data.getAnswer().getId()}"-->
@@ -46,14 +138,13 @@
         </div>
 
         <div class="row col-md-12 form-button-row">
-            <div class="col-md-6">
-                <button type="reset" class="btn btn-warning offset-3 col-md-6">Reset</button>
+            <div class="col-md-6 offset-9"
+                 th:if="${data.getQuestionnaireQuestionIdTab().length}>${data.getCounter()-1}">
+                <button type="submit" class="btn btn-next" style="margin-bottom: 30px"></button>
             </div>
-            <div class="col-md-6" th:if="${data.getQuestionnaireQuestionIdTab().length}>${data.getCounter()-1}">
-                <button type="submit" class="btn btn-primary offset-3 col-md-6">Submit</button>
-            </div>
-            <div class="col-md-6" th:if="${data.getQuestionnaireQuestionIdTab().length}==${data.getCounter()-1}">
-                <button type="submit" class="btn btn-primary offset-3 col-md-6">Submit and end</button>
+            <div class="col-md-6 offset-9"
+                 th:if="${data.getQuestionnaireQuestionIdTab().length}==${data.getCounter()-1}">
+                <button type="submit" class="btn btn-finish" style="margin-bottom: 30px"></button>
             </div>
         </div>
     </form>

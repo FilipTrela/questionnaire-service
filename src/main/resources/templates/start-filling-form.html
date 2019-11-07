@@ -6,25 +6,37 @@
     <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
 </head>
 <body class="bg text-center">
-<div class="row col-md-2" style="margin-top: 150px; margin-left: 42%">
-    <th:block th:replace="fragments :: navigator" th:remove="tag"/>
-    <img th:src="@{/image/logo.png}" class="img-fluid rounded">
+<th:block th:replace="fragments :: navigator" th:remove="tag"/>
+<div class="row col-md-2 offset-5" style="margin-top: 7%;">
+    <img th:src="@{/image/logo.png}"
+         th:class="${errorMessage != null ? 'img-fluid' : 'img-fluid animated fadeInDown slow'}">
 </div>
-<div class="row">
+<div th:class="${errorMessage != null ? 'row' : 'img-fluid animated fadeInUp slow'}">
     <h1 class="display-4" th:text="${questionnaire.getTitle()}" style="color: #966364; margin: 0 auto"></h1>
 </div>
 </center>
-<form id="form" th:action="@{/public/fill}" method="post" th:object="${questionnaire}" style="margin-top: 30px;margin-left: 25%">
+<form id="form"
+      th:class="${errorMessage != null ? 'col-md-4 offset-4' : 'col-md-4 offset-4 animated slideInDown slower'}"
+      th:action="@{/public/fill}" method="post"
+      th:object="${questionnaire}" style="margin-top: 3%;">
     <input type="hidden" th:field="*{id}" th:value="*{id}">
+    <div th:if="${errorMessage != null}" class="row col-md-12 form-input-row">
+        <div class="col-md-6 offset-3 alert alert-danger animated bounce infinite slower"
+             th:text="${errorMessage}"></div>
+    </div>
     <div class="form-row">
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-12">
             <label for="exampleInputUsername"><p class="h6">Your name</p></label>
             <input type="text" class="form-control" id="exampleInputUsername"
-                   placeholder="Enter Name" minlength="5" maxlength="30" th:name="yourName"
+                   placeholder="Enter Name" minlength="2" maxlength="30" th:name="yourName"
                    aria-describedby="userHelp">
         </div>
     </div>
-    <button type="submit" class="btn start" style="margin-top: 50px;margin-right: 33%"></button>
+    <div th:class="${errorMessage != null ? 'col-md-12' : 'col-md-12 animated slideInUp slow delay-1s'}">
+        <button type="submit" class="btn start" style="margin-top: 9%;"></button>
+    </div>
 </form>
+<th:block th:replace="fragments :: footer" th:remove="tag"/>
+<th:block th:replace="fragments :: scripts" th:remove="tag"/>
 </body>
 </html>

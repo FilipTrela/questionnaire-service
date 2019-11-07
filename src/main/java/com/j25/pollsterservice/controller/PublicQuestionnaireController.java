@@ -4,7 +4,6 @@ import com.j25.pollsterservice.model.*;
 import com.j25.pollsterservice.model.dto.AnswerDataRequest;
 import com.j25.pollsterservice.service.*;
 import lombok.AllArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,16 +22,18 @@ public class PublicQuestionnaireController {
     private AnonymousUserService anonymousUserService;
     private AnswerService answerService;
     private PossibleAnswerService possibleAnswerService;
+    private AccountService accountService;
 
 
     @GetMapping("/listQuestionnaire")
-    public String listQuestionnaries(Model model) {
+    public String listQuestionnaries(Model model, Principal principal) {
         List<Questionnaire> questionnaires = questionnarieService.findAllPublic();
         model.addAttribute("questionnaires", questionnaires);
+        if (principal != null) {
+            model.addAttribute("account", accountService.findByUsername(principal.getName()).get());
+        }
         return "questionnaire-list";
-
     }
-
 
     @GetMapping("/fill/{questionnaire_id}")
     public String fill(Model model,
@@ -49,7 +50,10 @@ public class PublicQuestionnaireController {
     }
 
     @PostMapping("/fill")
-    public String fill(String yourName, Questionnaire questionnaireCheck) {
+    public String fill(Model model, String yourName, Questionnaire questionnaireCheck) {
+        if (nameIsEmpty(yourName)) {
+            return startFillingError(model, questionnaireCheck, "Please type your name");
+        }
         Optional<Questionnaire> questionnaireOptional = questionnarieService.findById(questionnaireCheck.getId());
         AnonymousUser anonymousUser = new AnonymousUser();
         if (questionnaireOptional.isPresent()) {
@@ -62,7 +66,15 @@ public class PublicQuestionnaireController {
         return "redirect:/public/answer/" + questionnaireCheck.getId() + "/" + anonymousUser.getId() + "/1";
     }
 
+    private String startFillingError(Model model, Questionnaire questionnaireCheck, String message) {
+        model.addAttribute("questionnaire", questionnaireCheck);
+        model.addAttribute("errorMessage", message);
+        return "start-filling-form";
+    }
 
+    private boolean nameIsEmpty(String yourName) {
+        return yourName.length() < 1;
+    }
 
 
     @PostMapping("/answer")
@@ -84,7 +96,7 @@ public class PublicQuestionnaireController {
 
             answerService.save(answer);
             if (answerDataRequest.getQuestionnaireQuestionIdTab().length < answerDataRequest.getCounter()) {
-                return "redirect:/public/endOfQuestionnaire";
+                return "redirect:/public/endOfQuestionnaire/" + answerDataRequest.getAnonymousUserId();
                 //return "redirect:/public/listQuestionnaire";
             }
 
@@ -134,8 +146,12 @@ public class PublicQuestionnaireController {
     }
 
 
-    @GetMapping("/endOfQuestionnaire")
-    public String endOfQuestionnaire() { return "end-view"; }
+    @GetMapping("/endOfQuestionnaire/{id}")
+    public String endOfQuestionnaire(Model model, @PathVariable("id") Long id) {
+        Optional<AnonymousUser> byId = anonymousUserService.findById(id);
+        byId.ifPresent(anonymousUser -> model.addAttribute("name", anonymousUser.getName()));
+        return "end-view";
+    }
 
 
     /*

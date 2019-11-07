@@ -68,4 +68,7 @@ public class Account {
                 .anyMatch(accountRole -> accountRole.getName().equals("ADMIN"));
     }
 
+    public boolean canOpen(Questionnaire questionnaire){
+        return questionnaireSet.contains(questionnaire);
+    }
 }

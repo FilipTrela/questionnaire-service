@@ -120,4 +120,8 @@ public class AccountService {
         }
         return false;
     }
+
+    public Optional<Account> findByUsername(String name) {
+        return accountRepository.findByUsername(name);
+    }
 }
