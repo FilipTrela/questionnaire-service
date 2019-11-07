@@ -1,5 +1,6 @@
 package com.j25.pollsterservice.controller;
 
+import com.j25.pollsterservice.model.Account;
 import com.j25.pollsterservice.model.dto.CreateNewAccountRequest;
 import com.j25.pollsterservice.model.dto.EditAccountRequest;
 import com.j25.pollsterservice.service.AccountService;
@@ -146,11 +147,12 @@ public class AccountController {
 
     private boolean numberIsEmpty(CreateNewAccountRequest request) {
         return request.getPhone().length() < 1;
+    }
 
     @GetMapping("/edit")
     public String editForm(Model model, EditAccountRequest request, Principal principal) {
         Optional<Account> accountOptional = accountService.findByUsername(principal.getName());
-        if(accountOptional.isPresent()) {
+        if (accountOptional.isPresent()) {
             Account account = accountOptional.get();
             request.setName(account.getName());
             request.setPhone(account.getPhone());
@@ -166,9 +168,9 @@ public class AccountController {
 
     @PostMapping("/edit")
     public String editAccount(@Valid EditAccountRequest request,
-                           BindingResult result,
-                           Principal principal,
-                           Model model) {
+                              BindingResult result,
+                              Principal principal,
+                              Model model) {
 
         if (result.hasErrors()) {
             return editingError(model, request, result.getFieldError().getDefaultMessage());
@@ -181,6 +183,7 @@ public class AccountController {
 
         return "redirect:/";
     }
+
     private String editingError(Model model, EditAccountRequest account, String message) {
         model.addAttribute("newAccount", account);
         model.addAttribute("errorMessage", message);
