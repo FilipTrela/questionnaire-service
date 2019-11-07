@@ -1,10 +1,8 @@
 package com.j25.pollsterservice.service;
 
-import com.j25.pollsterservice.model.PossibleAnswer;
-import com.j25.pollsterservice.model.Question;
-import com.j25.pollsterservice.model.QuestionType;
-import com.j25.pollsterservice.model.Questionnaire;
+import com.j25.pollsterservice.model.*;
 import com.j25.pollsterservice.model.dto.QuestionCreateRequest;
+import com.j25.pollsterservice.repository.AccountRepository;
 import com.j25.pollsterservice.repository.PossibleAnswerRepository;
 import com.j25.pollsterservice.repository.QuestionRepository;
 import com.j25.pollsterservice.repository.QuestionnaireRepository;
@@ -23,6 +21,7 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final QuestionnaireRepository questionnaireRepository;
     private final PossibleAnswerRepository possibleAnswerRepository;
+    private final AccountRepository accountRepository;
 
     public Set<Question> getQuestion(Long id) {
         return questionnaireRepository.getOne(id).getQuestionSet();
@@ -82,4 +81,16 @@ public class QuestionService {
             possibleAnswerRepository.save(new PossibleAnswer(request.getAnswer4Correct(), request.getAnswer4(), question));
         }
     }
+
+    public void delete(Long questionId, String name) {
+        Optional<Account> accountOptional = accountRepository.findByUsername(name);
+        Optional<Question> questionOptional = questionRepository.findById(questionId);
+        if(accountOptional.isPresent()& questionOptional.isPresent()){
+            if(questionOptional.get().getQuestionnaireQuestion().getAccount().equals(accountOptional.get())){
+                questionRepository.delete(questionOptional.get());
+            }
+        }
+    }
+
+
 }

@@ -34,12 +34,11 @@ public class QuestionnarieService {
         throw new EntityNotFoundException("no questionnaires");
     }
 
-    public Long add(CreateQuestionnaireRequest request, Principal principal) {
+    public Long add(Questionnaire request, Principal principal) {
         Optional<Account> optionalAccount = accountRepository.findByUsername(principal.getName());
         if (optionalAccount.isPresent()) {
-            Questionnaire newQuestionnaireFormDto = questionnaireMapper.createNewQuestionnaireFormDto(request);
-            newQuestionnaireFormDto.setAccount(optionalAccount.get());
-            return questionnaireRepository.save(newQuestionnaireFormDto).getId();
+            request.setAccount(optionalAccount.get());
+            return questionnaireRepository.save(request).getId();
         }
         throw new EntityNotFoundException("no user");
     }

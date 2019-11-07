@@ -13,7 +13,9 @@
     </div>
 </center>
 <form id="form" th:action="@{/question/add}" method="post" th:object="${request}" style="margin-left: 15%">
-    <input type="hidden" name="questionnaryID" th:field="*{questionnarieID}">
+    <div class="hidden" th:if="*{questionnarieID}">
+        <input type="hidden" name="questionnaryID" th:field="*{questionnarieID}">
+    </div>
     <div class="form-row">
         <div class="form-group col-md-10">
             <label for="exampleInputPassword1"><p class="h4">Question</p></label>

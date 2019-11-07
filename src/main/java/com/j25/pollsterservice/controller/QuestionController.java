@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,10 +101,14 @@ public class QuestionController {
     }
 
 
-    @GetMapping("/showStats")
-    public String showStatistic() {
-        return "question-statistic";
+    @GetMapping("/delete/{deleted_question_id}")
+    public String deleteQuestion(Model model,
+                         @PathVariable(name = "deleted_question_id") Long questionId,
+                                 Principal principal,
+                                 HttpServletRequest request) {
+        questionService.delete(questionId, principal.getName());
 
+        return "redirect:"+request.getHeader("referer");
     }
 
 }
