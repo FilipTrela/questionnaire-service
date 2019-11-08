@@ -8,11 +8,13 @@
 <body class="bg text-center">
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
 <center>
-    <div class="row col-md-4" style="margin-top: 7%">
-        <img th:src="@{/image/addQuestion.png}" class="img-fluid rounded">
+    <div th:if="${errorMessage == null}" class="row col-md-4" style="margin-top: 7%">
+        <img th:src="@{/image/addQuestion.png}" class="img-fluid rounded animated fadeInDown">
     </div>
 </center>
-<form id="form" th:class="${errorMessage != null ? 'col-md-12' : 'col-md-12 animated delay-1s fadeInDown slow'}"
+<form id="form"
+      th:style="${errorMessage== null ? '' : 'margin-top: 7%'}"
+      th:class="${errorMessage != null ? 'col-md-12' : 'col-md-12 animated delay-1s fadeInDown slow'}"
       th:action="@{/question/add}" method="post" th:object="${request}">
     <div th:if="${errorMessage != null}" class="row col-md-12 form-input-row">
         <div class="col-md-6 offset-3 alert alert-danger animated bounce infinite slower"

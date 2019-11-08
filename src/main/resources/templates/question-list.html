@@ -38,7 +38,8 @@
         <td th:text="${question.getCorrectAnswers()}"></td>
         <td class="animated fadeInDown slower delay-2s">
             <a th:href="@{'/question/delete/'+${question.getId()}}" class="btn btn-del" role="button"></a>
-            <a th:href="@{'/question/showStats/'+${question.getId()}}" class="btn btn-stats" role="button"></a>
+            <a th:if="${question.getAllAnswers().size()>0}" th:href="@{'/question/showStats/'+${question.getId()}}"
+               class="btn btn-stats" role="button"></a>
         </td>
     </tbody>
 </table>
