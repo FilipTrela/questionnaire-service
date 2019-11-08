@@ -13,7 +13,7 @@
         <div class="animated zoomIn slower ">
             <img th:src="@{/image/thanks.png}" class="img-fluid rounded thanks"
                  style="margin-bottom: 1%; margin-top: 1%">
-            <h1 class=" display-3 font-weight-bold" th:text="${name}+' !'"
+            <h1 class=" display-3 font-weight-bold" th:text="${name.trim().toUpperCase()}+' !'"
                 style="color: #966364; margin-bottom: 2%"></h1>
         </div>
         <div class="col-md-12 view overlay zoom animated fadeInDown slower delay-2s">

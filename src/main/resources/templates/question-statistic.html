@@ -7,7 +7,7 @@
 
 
 </head>
-<body class="bg text-center">
+<body class="text-center stats">
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
 
 <script type="text/javascript" th:inline="javascript">
@@ -24,7 +24,7 @@
         <div id="chartContainer"  style="height: 550px; width: 100%;"></div>
     </div>
 
-    <div class="row col-md-12">
+    <div class="row col-md-12" style="margin-top: 1%">
         <a th:href="@{${referer}}" class="col-md-4 offset-4">
             <button type="button" class="btn back"></button>
         </a>

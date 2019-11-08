@@ -416,3 +416,7 @@ header,
     height: 35%;
     width: 35%;
 }
+
+.stats {
+    background-color: #333333 !important;
+}

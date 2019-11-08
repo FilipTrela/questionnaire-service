@@ -8,15 +8,19 @@
 <body class="bg text-center">
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
 <div class="row col-md-12" style="margin-top: 7%;">
-    <div class="col-md-8 text-center animated fadeInUp slow">
+    <div class="col-md-7 text-center animated fadeInUp slow">
         <h1 class="display-4" th:text="${title}" style="color: #966364"></h1>
     </div>
-    <div class="col-md-4 animated fadeInDown slow" style="margin-top: 10px">
+    <div class="col-md-5 animated fadeInDown slow" style="margin-top: 10px">
+        <a th:href="@{'/question/add/'+${questionnaryID}}">
+            <button type="button" class="btn addQuestion"></button>
+        </a>
+        <a th:href="@{'/questionnaire/edit/'+${questionnaryID}}">
+            <button type="button" class="btn edit"></button>
+        </a>
         <a th:href="@{'/questionnaire/remove/'+${questionnaryID}}">
             <button type="button" class="btn delete"></button>
-        </a><a th:href="@{'/questionnaire/edit/'+${questionnaryID}}">
-        <button type="button" class="btn edit"></button>
-    </a>
+        </a>
     </div>
 </div>
 <table class="table rounded animated fadeInDown slow table-striped table-dark col-md-10 offset-1"
@@ -37,15 +41,16 @@
         <td th:text="${question.getAllAnswers()}"></td>
         <td th:text="${question.getCorrectAnswers()}"></td>
         <td class="animated fadeInDown slower delay-2s">
-            <a th:href="@{'/question/delete/'+${question.getId()}}" class="btn btn-del" role="button"></a>
+            <a th:href="@{'/question/delete/'+${question.getId()}}" class="btn btn-del" role="button"
+               style="margin: 3px"></a>
             <a th:if="${question.getAllAnswers().size()>0}" th:href="@{'/question/showStats/'+${question.getId()}}"
-               class="btn btn-stats" role="button"></a>
+               class="btn btn-stats" role="button" style="margin: 3px"></a>
         </td>
     </tbody>
 </table>
 
 <div class="row col-md-12 justify-content-center">
-    <nav aria-label="Page">
+    <nav class="col-md-4 offset-4" aria-label="Page">
         <ul class="pagination">
             <li class="page-item" th:if="${questions.getNumber() >0}">
                 <a class="page-link"
@@ -77,14 +82,8 @@
             </li>
         </ul>
     </nav>
-</div>
-<div class="col-md-12 ">
-    <div class="col-md-4 offset-8 animated fadeInUp slow delay-1s">
-        <a th:href="@{'/question/add/'+${questionnaryID}}">
-            <button type="button" class="btn addQuestion"></button>
-        </a>
-    </div>
-    <div th:if="${questionnary.getQuestionSet().size()>0}" class="col-md-4 animated fadeInUp slow offset-8 delay-2s">
+    <div th:if="${questionnary.getQuestionSet().size()>0}"
+         class="col-md-4 animated fadeInUp slow delay-2s">
         <a th:href="@{/questionnaire/list}">
             <button type="button" class="btn continue"></button>
         </a>
