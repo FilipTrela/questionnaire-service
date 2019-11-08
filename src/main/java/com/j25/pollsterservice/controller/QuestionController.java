@@ -52,7 +52,6 @@ public class QuestionController {
 
     @GetMapping("/add/{id}")
     public String addQuestionToQuestionnary(Model model, QuestionCreateRequest request, @PathVariable(name = "id") Long id) {
-//        model.addAttribute("questionnaryID", id);
         request.setQuestionnarieID(id);
         model.addAttribute("request", request);
 
@@ -60,9 +59,26 @@ public class QuestionController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid QuestionCreateRequest request) {
+    public String add(@Valid QuestionCreateRequest request, Model model) {
+        if (request.getContent().isEmpty()) {
+            return createQuestionError(model, request, "Please fill question.");
+        }
+        if (request.getAnswer1().isEmpty()) {
+            return createQuestionError(model, request, "Please type at least 2 answer");
+        }
+        if (request.getAnswer2().isEmpty()) {
+            return createQuestionError(model, request, "Please type at least 2 answer");
+        }
         questionService.addQuestion(request);
         return "redirect:/question/list/" + request.getQuestionnarieID();
+    }
+
+
+    private String createQuestionError(Model model, QuestionCreateRequest request, String message) {
+        model.addAttribute("request", request);
+        model.addAttribute("errorMessage", message);
+
+        return "question-add";
     }
 
 

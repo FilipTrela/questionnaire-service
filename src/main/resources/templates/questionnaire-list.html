@@ -23,7 +23,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="quest,index : ${questionnaires}" th:if="${quest.getQuestionSet().size()>1||account.canOpen(quest)}">
+    <tr th:each="quest,index : ${questionnaires}">
         <!--jezeli ma pytania   -->
         <th scope="row" th:text="1+${index.index}"></th>
         <td th:text="${quest.getTitle()}"></td>
@@ -74,14 +74,13 @@
 
 
 <!--<div class="row" style="margin-left: 75%; margin-bottom: 10%;">-->
-    <!--<a th:href="@{'/question/add/'+${questionnaryID}}">-->
-        <!--<button type="button" class="btn addQuestion"></button>-->
-    <!--</a>-->
-    <!--<a th:href="@{/questionnaire/list}">-->
-        <!--<button type="button" class="btn continue"></button>-->
-    <!--</a>-->
+<!--<a th:href="@{'/question/add/'+${questionnaryID}}">-->
+<!--<button type="button" class="btn addQuestion"></button>-->
+<!--</a>-->
+<!--<a th:href="@{/questionnaire/list}">-->
+<!--<button type="button" class="btn continue"></button>-->
+<!--</a>-->
 <!--</div>-->
-
 
 
 <th:block th:replace="fragments :: footer" th:remove="tag"/>
