@@ -13,7 +13,7 @@ window.onload = function() {
         exportEnabled: true,
         animationEnabled: true,
         title: {
-            text: "Question: "+question
+            text: question
         },
         data: [{
             type: "pie",
