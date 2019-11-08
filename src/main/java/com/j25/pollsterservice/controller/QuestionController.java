@@ -40,7 +40,7 @@ public class QuestionController {
     public String listQuestionFromQuestionnaryPagination(Model model,
                                                          @PathVariable(name = "id") Long id,
                                                          @RequestParam(name = "page", defaultValue = "0") int page,
-                                                         @RequestParam(name = "size", defaultValue = "5") int size) {
+                                                         @RequestParam(name = "size", defaultValue = "4") int size) {
         Page<Question> questionPage = questionService.getPage(id, PageRequest.of(page, size));
         Optional<Questionnaire> byId = questionnarieService.findById(id);
         byId.ifPresent(questionnaire -> model.addAttribute("questionnary", questionnaire));

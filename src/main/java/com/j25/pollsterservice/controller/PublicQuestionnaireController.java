@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -39,10 +38,10 @@ public class PublicQuestionnaireController {
 
     @GetMapping("/listQuestionnaire")
     public String listQuestionnariesPage(Model model,
-                                     Principal principal,
-                                     @RequestParam(name = "page", defaultValue = "0") int page,
-                                     @RequestParam(name = "size", defaultValue = "5") int size) {
-        Page<Questionnaire> questionnairePage = questionnarieService.getAllPage( PageRequest.of(page, size));
+                                         Principal principal,
+                                         @RequestParam(name = "page", defaultValue = "0") int page,
+                                         @RequestParam(name = "size", defaultValue = "5") int size) {
+        Page<Questionnaire> questionnairePage = questionnarieService.getAllPage(PageRequest.of(page, size));
         model.addAttribute("questionnaires", questionnairePage);
         if (principal != null) {
             model.addAttribute("account", accountService.findByUsername(principal.getName()).get());
@@ -94,7 +93,10 @@ public class PublicQuestionnaireController {
 
 
     @PostMapping("/answer")
-    public String firstAnswer(@ModelAttribute AnswerDataRequest answerDataRequest) {
+    public String firstAnswer(@ModelAttribute AnswerDataRequest answerDataRequest, Model model) {
+        if (answerDataRequest.getAnswerId() == null) {
+            return noAnswerSelectedError(answerDataRequest, model);
+        }
 
 
         Optional<Question> questionOptional = questionService.findById(answerDataRequest.getQuestionnaireQuestionIdTab()[answerDataRequest.getCounter() - 2]);
@@ -124,6 +126,19 @@ public class PublicQuestionnaireController {
 
         return "redirect:/public/listQuestionnaire";
 
+    }
+
+    private String noAnswerSelectedError(AnswerDataRequest answerDataRequest, Model model) {
+        Optional<Question> question = questionService.findById(answerDataRequest.getQuestionnaireQuestionIdTab()[answerDataRequest.getCounter() - 2]);
+        question.ifPresent(question1 -> model.addAttribute("question", question1));
+        model.addAttribute("data", answerDataRequest);
+        Optional<AnonymousUser> byId = anonymousUserService.findById(answerDataRequest.getAnonymousUserId());
+        if (byId.isPresent()) {
+            model.addAttribute("errorMessage", byId.get().getName()+" please chose at least one answer !");
+        } else {
+            model.addAttribute("errorMessage", "Chose at least one answer!");
+        }
+        return "question-form";
     }
 
     @GetMapping("/answer/{questionnaire_id}/{anonymous_user_id}/{counter}")
@@ -169,44 +184,4 @@ public class PublicQuestionnaireController {
         return "end-view";
     }
 
-
-    /*
-
-    @GetMapping("/list")
-    public String list(Model model,
-                       @RequestParam(name = "page", defaultValue = "0") int page,
-                       @RequestParam(name = "size", defaultValue = "10") int size) {
-        Page<Author> authorPage = authorService.getPage(PageRequest.of(page, size));
-
-        model.addAttribute("authors", authorPage);
-        return "author-list";
-    }
-
-    @GetMapping("/books/{id}")
-    public String addAuthorsToBooks(Model model,
-                                    @PathVariable("id") Long authorId) {
-        Optional<Author> authorOptional = authorService.getAuthor(authorId);
-        if (authorOptional.isPresent()) {
-            Author author = authorOptional.get();
-
-            List<Book> books = bookService.getAll();
-
-            model.addAttribute("author", author);
-            model.addAttribute("books", books);
-
-            return "author-bookform";
-        }
-
-        return "redirect:/author/list";
-    }
-
-    @GetMapping("/book/remove/{bookid}/{authorid}")
-    public String removeBookFromAuthor(@PathVariable("bookid") Long bookid,
-                                       @PathVariable("authorid") Long authorid,
-                                       HttpServletRequest request){
-        authorService.removeBookFromAuthor(authorid, bookid);
-
-        return "redirect:" + request.getHeader("referer");
-    }
-    */
 }
