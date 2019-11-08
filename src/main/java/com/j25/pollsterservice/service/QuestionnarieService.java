@@ -7,6 +7,9 @@ import com.j25.pollsterservice.model.dto.CreateQuestionnaireRequest;
 import com.j25.pollsterservice.repository.AccountRepository;
 import com.j25.pollsterservice.repository.QuestionnaireRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -23,16 +26,16 @@ public class QuestionnarieService {
     private final QuestionnaireMapper questionnaireMapper;
 
 
-    public List<Questionnaire> findAllUserQuestionnaire(Principal principal) {
-        List<Questionnaire> questionnaireList = new LinkedList<>();
-        Optional<Account> accountOptional = accountRepository.findByUsername(principal.getName());
-        if (accountOptional.isPresent()) {
-            Account account = accountOptional.get();
-            questionnaireList = questionnaireRepository.findAllByAccount(account);
-            return questionnaireList;
-        }
-        throw new EntityNotFoundException("no questionnaires");
-    }
+//    public List<Questionnaire> findAllUserQuestionnaire(Principal principal) {
+//        List<Questionnaire> questionnaireList = new LinkedList<>();
+//        Optional<Account> accountOptional = accountRepository.findByUsername(principal.getName());
+//        if (accountOptional.isPresent()) {
+//            Account account = accountOptional.get();
+//            questionnaireList = questionnaireRepository.findAllByAccount(account);
+//            return questionnaireList;
+//        }
+//        throw new EntityNotFoundException("no questionnaires");
+//    }
 
     public Long add(Questionnaire request, Principal principal) {
         Optional<Account> optionalAccount = accountRepository.findByUsername(principal.getName());
@@ -63,5 +66,14 @@ public class QuestionnarieService {
 
     public Optional<Questionnaire> findById(Long questionnaireId) {
         return questionnaireRepository.findById(questionnaireId);
+    }
+
+    public Page<Questionnaire> getPageByUser(Account account, Pageable of) {
+        return questionnaireRepository.findAllByAccount(account, of);
+    }
+
+    public Page<Questionnaire> getAllPage(PageRequest of) {
+        return questionnaireRepository.findAll(of);
+
     }
 }

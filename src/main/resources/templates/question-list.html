@@ -42,13 +42,18 @@
         </td>
     </tbody>
 </table>
+
 <div class="row col-md-12 justify-content-center">
-    <nav aria-label="Page navigation example">
+    <nav aria-label="Page">
         <ul class="pagination">
             <li class="page-item" th:if="${questions.getNumber() >0}">
                 <a class="page-link"
                    th:href="@{'/question/list/'+${questionnaryID}+'?page='+${(questions.getNumber()-1)}+'&size='+${questions.getSize()}}"
-                >Previous
+
+                   aria-label="Previous">
+                    <span aria-hidden="true">Previous</span>
+                    <span class="sr-only">Previous</span>
+
                 </a>
             </li>
             <li class="page-item"
