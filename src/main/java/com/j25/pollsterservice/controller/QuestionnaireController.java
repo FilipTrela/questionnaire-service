@@ -3,12 +3,8 @@ package com.j25.pollsterservice.controller;
 import com.j25.pollsterservice.model.Account;
 import com.j25.pollsterservice.model.Question;
 import com.j25.pollsterservice.model.Questionnaire;
-import com.j25.pollsterservice.model.dto.CreateQuestionnaireRequest;
-
-import com.j25.pollsterservice.service.AccountService;
-
 import com.j25.pollsterservice.model.dto.EditQuestionnaireRequest;
-
+import com.j25.pollsterservice.service.AccountService;
 import com.j25.pollsterservice.service.QuestionnarieService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -69,11 +64,22 @@ public class QuestionnaireController {
     }
 
     @PostMapping("/create")
-    public String register(Questionnaire questionnaire, Principal principal) {
+    public String register(Model model, Questionnaire questionnaire, Principal principal) {
+
+        if (questionnaireGotEmptyString(questionnaire.getTitle())) {
+            return questionnaireRegisterError(model, questionnaire, "Please type tittle");
+        }
+        if (questionnaireGotEmptyString(questionnaire.getDescription())) {
+            return questionnaireRegisterError(model, questionnaire, "Please type description");
+        }
 
         Long id = questionnarieService.add(questionnaire, principal);
 
         return "redirect:/question/list/" + id;
+    }
+
+    private boolean questionnaireGotEmptyString(String string) {
+        return string.isEmpty();
     }
 
     @GetMapping("/edit/{questionnaire_id}")
@@ -86,7 +92,6 @@ public class QuestionnaireController {
         return "questionnarie-from";
     }
 
-
     @GetMapping("/remove/{remove_quest_id}")
     public String delete(Model model,
                          @PathVariable(name = "remove_quest_id") Long questionnaireId, Principal principal) {
@@ -94,5 +99,10 @@ public class QuestionnaireController {
         return "redirect:/questionnaire/list";
     }
 
+    private String questionnaireRegisterError(Model model, Questionnaire questionnaire, String message) {
+        model.addAttribute("questionarry", questionnaire);
+        model.addAttribute("errorMessage", message);
+        return "questionnarie-from";
+    }
 
 }

@@ -8,20 +8,23 @@
 <body>
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
 <center>
-    <img th:src="@{/image/name.png}" class="img-fluid rounded name" style="margin-top: 5%">
+    <img th:src="@{/image/name.png}" class="img-fluid animated slower zoomInUp rounded name" style="margin-top: 4%">
     <div class="view overlay">
-        <img th:src="@{/image/thanks.png}" class="img-fluid animated zoomIn slower delay-1s rounded name"
-             style="margin-bottom: 5%; margin-top: 2%">
-
-        <div class="col-md-12 view overlay zoom animated fadeInDown">
+        <div class="animated zoomIn slower ">
+            <img th:src="@{/image/thanks.png}" class="img-fluid rounded thanks"
+                 style="margin-bottom: 1%; margin-top: 1%">
+            <h1 class=" display-3 font-weight-bold" th:text="${name}+' !'"
+                style="color: #966364; margin-bottom: 2%"></h1>
+        </div>
+        <div class="col-md-12 view overlay zoom animated fadeInDown slower delay-2s">
             <a th:href="@{/public/listQuestionnaire}">
-                <button type="button" class="btn btn-primary">Back to Questionnaire List</button>
+                <button type="button" class="btn btn-backToQL"></button>
             </a>
         </div>
-        <h1 th:text="${name}"></h1>
-        <div class="col-md-12 view overlay zoom animated fadeInDown">
+
+        <div class="col-md-12 view animated fadeInDown slower delay-3s">
             <a th:href="@{/}">
-                <button type="button" class="btn btn-primary">Back to Home Page</button>
+                <button type="button" class="btn btn-backTo"></button>
             </a>
         </div>
 

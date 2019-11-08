@@ -8,16 +8,19 @@
 <body class="bg text-center">
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
 <center>
-    <div class="row col-md-5" style="margin-top: 100px">
-        <img th:src="@{/image/registration.png}" class="img-fluid rounded">
+    <div class="row col-md-5" style="margin-top: 7%; margin-bottom: 2%">
+        <img th:src="@{/image/editProfile.png}" class="img-fluid rounded animated fadeInDown">
     </div>
 </center>
-<form id="form" th:action="@{/user/edit}" method="post" th:object="${editAccount}" style="margin-left: 27%">
-    <div th:if="${errorMessage != null}" class="row col-md-8 form-input-row">
-        <div class="col-md-12 alert alert-danger" th:text="${errorMessage}"></div>
+<form id="form" th:action="@{/user/edit}" method="post" th:object="${editAccount}"
+      th:class="${errorMessage != null ? 'col-md-12' : 'col-md-12 animated delay-1s fadeInDown slow'}"
+th:style="${errorMessage != null ? '' : 'margin-top 5%'}">
+    <div th:if="${errorMessage != null}" class="row col-md-12 form-input-row">
+        <div class="col-md-6 offset-3 alert alert-danger animated bounce infinite slower"
+             th:text="${errorMessage}"></div>
     </div>
-    <div class="form-row">
-        <div class="form-group col-md-4">
+    <div class="form-row col-md-12">
+        <div class="form-group col-md-4 offset-2">
             <label for="exampleInputEmail1"><p class="h6">Email address</p></label>
             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                    placeholder="Enter email" th:field="*{userEmail}" th:value="*{userEmail}">
@@ -27,11 +30,11 @@
         <div class="form-group col-md-4">
             <label for="exampleInputEmail1"><p class="h6">Phone Number</p></label>
             <input type="text" class="form-control" id="phoneNumber"
-                   placeholder="+ 48" th:field="*{phone}"  th:value="*{phone}">
+                   placeholder="+ 48" th:field="*{phone}" th:value="*{phone}">
         </div>
     </div>
-    <div class="form-row">
-        <div class="form-group col-md-4">
+    <div class="form-row col-md-12">
+        <div class="form-group col-md-4 offset-2">
             <label for="exampleInputEmail1"><p class="h6">Name</p></label>
             <input type="text" class="form-control" id="name"
                    placeholder="Enter Name" th:field="*{name}" th:value="*{name}">
@@ -39,10 +42,12 @@
         <div class="form-group col-md-4">
             <label for="exampleInputEmail1"><p class="h6">Surname</p></label>
             <input type="text" class="form-control" id="surname"
-                   placeholder="Enter Surname" th:field="*{surname}" th:value="*{surname}">
+                   placeholder="Enter Surname"  th:field="*{surname}" th:value="*{surname}">
         </div>
     </div>
-    <button type="submit" class="btn sumbit" style="margin-right: 33%"></button>
+    <div class="col-md-12">
+        <button type="submit" class="btn sumbit"></button>
+    </div>
 </form>
 <th:block th:replace="fragments :: footer" th:remove="tag"/>
 <th:block th:replace="fragments :: scripts" th:remove="tag"/>

@@ -3,11 +3,12 @@ package com.j25.pollsterservice.controller;
 import com.j25.pollsterservice.model.Answer;
 import com.j25.pollsterservice.model.PossibleAnswer;
 import com.j25.pollsterservice.model.Question;
+import com.j25.pollsterservice.model.Questionnaire;
 import com.j25.pollsterservice.model.dto.QuestionCreateRequest;
 import com.j25.pollsterservice.service.AnswerService;
 import com.j25.pollsterservice.service.QuestionService;
+import com.j25.pollsterservice.service.QuestionnarieService;
 import lombok.AllArgsConstructor;
-import net.bytebuddy.agent.builder.AgentBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,23 +32,9 @@ import java.util.stream.Collectors;
 @PreAuthorize(value = "hasRole('USER')")
 public class QuestionController {
 
-    private QuestionService questionService;
-    private AnswerService answerService;
-
-//    @GetMapping("/list")
-//    public String listQuestions(Model model, Principal principal) {
-//        List<Question> questionnaires = questionService.findAllUserQuestion(principal);
-//        model.addAttribute("questionnaires", questionnaires);
-//        return "questionnaire-list";
-//
-//    }
-
-//    @GetMapping("/list/{id}")
-//    public String listQuestionFromQuestionnary(Model model, @PathVariable(name = "id") Long id) {
-//        model.addAttribute("questions", questionService.getQuestion(id));
-//
-//        return "question-list";
-//    }
+    private final QuestionService questionService;
+    private final AnswerService answerService;
+    private final QuestionnarieService questionnarieService;
 
     @GetMapping("/list/{id}")
     public String listQuestionFromQuestionnaryPagination(Model model,
@@ -55,6 +42,8 @@ public class QuestionController {
                                                          @RequestParam(name = "page", defaultValue = "0") int page,
                                                          @RequestParam(name = "size", defaultValue = "5") int size) {
         Page<Question> questionPage = questionService.getPage(id, PageRequest.of(page, size));
+        Optional<Questionnaire> byId = questionnarieService.findById(id);
+        byId.ifPresent(questionnaire -> model.addAttribute("questionnary", questionnaire));
         model.addAttribute("questions", questionPage);
         model.addAttribute("questionnaryID", id);
         model.addAttribute("title", questionService.getQuestionnaryTitle(id));
@@ -108,12 +97,12 @@ public class QuestionController {
 
     @GetMapping("/delete/{deleted_question_id}")
     public String deleteQuestion(Model model,
-                         @PathVariable(name = "deleted_question_id") Long questionId,
+                                 @PathVariable(name = "deleted_question_id") Long questionId,
                                  Principal principal,
                                  HttpServletRequest request) {
         questionService.delete(questionId, principal.getName());
 
-        return "redirect:"+request.getHeader("referer");
+        return "redirect:" + request.getHeader("referer");
     }
 
 }
